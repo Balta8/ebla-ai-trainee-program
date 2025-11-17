@@ -7,9 +7,9 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 ## 📋 Program Guidelines
 
 ### Development Best Practices
-• **Dedicate focused time daily** to learning and coding.
-• **Keep detailed notes and comments** in your code to track your thought process.
-• **Try different approaches.** Treat mistakes as learning opportunities.
+- **Dedicate focused time daily** to learning and coding.
+- **Keep detailed notes and comments** in your code to track your thought process.
+- **Try different approaches.** Treat mistakes as learning opportunities.
 
 ### Architecture & Design Patterns
 • **MVC (Model-View-Controller):** Follow MVC architecture principles when structuring your code.
@@ -18,9 +18,9 @@ This repository is dedicated to the implementation and deliverables of the **EBL
   - **Controller:** Process user input and coordinate between Model and View
 
 ### Version Control
-• **Git/GitHub:** Save and push your code/scripts for each milestone using Git/GitHub.
-• **Clear commits:** Each milestone should have clear commits and documentation.
-• **Commit messages:** Write descriptive commit messages explaining what was changed and why.
+- **Git/GitHub:** Save and push your code/scripts for each milestone using Git/GitHub.
+- **Clear commits:** Each milestone should have clear commits and documentation.
+- **Commit messages:** Write descriptive commit messages explaining what was changed and why.
 
 ---
 
@@ -50,9 +50,9 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 **Goal:** Understand Retrieval-Augmented Generation (RAG) architecture. Familiarize with a local LLM and indexing library.
 
 **Objectives:**
-• Study RAG architecture (retriever, generator, integration)
-• Install and configure a local LLM
-• Write initial scripts to interact with the chosen LLM and index documents
+- Study RAG architecture (retriever, generator, integration)
+- Install and configure a local LLM
+- Write initial scripts to interact with the chosen LLM and index documents
 
 ---
 
