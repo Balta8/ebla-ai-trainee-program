@@ -14,7 +14,7 @@
 
 # 📘 1. Discussion Summary — Python Basics
 
-# Source : [text](https://www.w3schools.com/python/)
+# Source : [w3schools](https://www.w3schools.com/python/)
 
 ## **1. Variables & Data Types**
 
