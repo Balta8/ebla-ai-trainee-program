@@ -6,155 +6,143 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ## 📋 Program Guidelines
 
-### Development Best Practices
-**Dedicate focused time daily** to learning and coding.
+### 🔧 Development Best Practices
+- **Dedicate focused time daily** to learning and coding.
+- **Keep detailed notes and comments** in your code to track your thought process.
+- **Try different approaches.** Treat mistakes as learning opportunities.
 
-**Keep detailed notes and comments** in your code to track your thought process.
-
-**Try different approaches.** Treat mistakes as learning opportunities.
-
-### Architecture & Design Patterns
+### 🧱 Architecture & Design Patterns
 **MVC (Model-View-Controller):** Follow MVC architecture principles when structuring your code.
-  - **Model:** Handle data and business logic
-  - **View:** Manage presentation layer (UI/API responses)
-  - **Controller:** Process user input and coordinate between Model and View
 
-### Version Control
-**Git/GitHub:** Save and push your code/scripts for each milestone using Git/GitHub.
+- **Model:** Handles data and business logic  
+- **View:** Manages the presentation layer (UI/API responses)  
+- **Controller:** Processes user input & coordinates between Model and View  
 
-**Clear commits:** Each milestone should have clear commits and documentation.
-**Commit messages:** Write descriptive commit messages explaining what was changed and why.
+### 🌿 Version Control
+- **Git/GitHub:** Save and push your code/scripts for each milestone.
+- **Clear commits:** Each milestone should have clear, meaningful commits.
+- **Commit messages:** Write descriptive messages explaining what changed and why.
 
 ---
 
 ## 🎯 Program Milestones
 
-### Milestone 1: Learning Python 
-**Status:** 🔄 In Progress  
-**Goal:** Gain a solid understanding of Python basics. Write clean, well-structured Python code.
+---
 
-**Objectives:**
-• Study Python fundamentals: variables, data types, control flow, functions, modules.
-• Practice beginner exercises (loops, conditionals, list/dict operations).
-• Apply Google Python Style Guide (type hints, docstrings, naming conventions).
+### **Milestone 1: Learning Python**
+**Status:** 🔄 *In Progress*  
+**Goal:** Gain a solid understanding of Python basics and write clean, structured code.
 
-**Deliverables:**
-- [ ] A short discussion summary of Python basics.
-- [ ] A set of Python scripts showing basic functionalities (loops, functions, classes).
+#### Objectives:
+- Study Python fundamentals: variables, data types, control flow, functions, modules.
+- Practice beginner exercises (loops, conditionals, list/dict operations).
+- Apply Google Python Style Guide (type hints, docstrings, naming conventions).
+
+#### Deliverables:
+- [ ] Short discussion summary of Python basics  
+- [ ] Python scripts showing basic functionalities (loops, functions, classes)
 
 ---
 
-### Milestone 2: Understanding RAG & Core Technologies
-**Status:** ⏳ Not Started  
-**Goal:** Understand Retrieval-Augmented Generation (RAG) architecture. Familiarize with a local LLM (e.g., DeepSeek, GPT-OSS, LLaMA) and an indexing library (LlamaIndex or LangChain).
+### **Milestone 2: Understanding RAG & Core Technologies**
+**Status:** ⏳ *Not Started*  
+**Goal:** Understand Retrieval-Augmented Generation (RAG) and get familiar with a local LLM + indexing library.
 
-**Objectives:**
-• Studying RAG architecture (retriever, generator, integration).
-• Install and configure a local LLM.
-• Write initial scripts to interact with the chosen LLM and index a few documents.
+#### Objectives:
+- Study RAG architecture (retriever, generator, integration)
+- Install & configure a local LLM
+- Write initial scripts to interact with the LLM and index sample documents
 
-**Deliverables:**
-- [ ] A discussion summary of RAG concepts.
-- [ ] A Python script demonstrating interaction with your chosen local LLM + a simple index build.
-
----
-
-### Milestone 3: Data Preparation & Indexing
-**Status:** ⏳ Not Started  
-**Goal:** Preprocess text data, create embeddings, and index documents. Expose these operations via FastAPI endpoints.
-
-**Objectives:**
-• Prepare dataset (text files, articles, or documents).
-
-• Generate embeddings using a vector store (FAISS, ChromaDB, Weaviate, etc.).
-
-• Build a FastAPI service with endpoints:
-  o POST /index → preprocess and index documents.
-  o POST /search → accept a query, return relevant documents.
-
-**Deliverables:**
-- [ ] A FastAPI project exposing endpoints to index and manage documents.
-- [ ] Documentation explaining how to call the endpoints and what they return.
+#### Deliverables:
+- [ ] RAG concept summary  
+- [ ] Python script for local LLM interaction + basic indexing
 
 ---
 
-### Milestone 4: Retrieval & LLM Integration
-**Status:** ⏳ Not Started  
-**Goal:** Implement retrieval of relevant documents. Integrate retrieval results with the local LLM to generate responses. Expose functionality via FastAPI.
+### **Milestone 3: Data Preparation & Indexing**
+**Status:** ⏳ *Not Started*  
+**Goal:** Preprocess text, create embeddings, and index documents. Expose functionality via FastAPI.
 
-**Objectives:**
-• Add a retrieval pipeline that fetches documents based on a query.
-• Pass retrieved documents to LLM for response generation.
-• Extend FastAPI with:
-  o POST /ask → accept a query, retrieve documents, and generate an LLM response.
+#### Objectives:
+- Prepare dataset (text files, articles, documents)
+- Generate embeddings using a vector store (FAISS / ChromaDB / Weaviate)
+- Build FastAPI endpoints:
+  - `POST /index` → preprocess + index documents  
+  - `POST /search` → query → return relevant documents  
 
-**Deliverables:**
-- [ ] A FastAPI project with working endpoints for document retrieval and LLM integration.
-- [ ] Example cURL or Postman requests demonstrating usage.
-
----
-
-### Milestone 5: Chat History, Prompt Engineering & Contextual RAG 
-**Status:** ⏳ Not Started  
-**Goal:** Understand the importance of chat history and context in conversational AI. Learn the basics of prompt engineering (instruction design, role prompting, few-shot examples). Design and integrate a chat history storage system. Enhance the existing RAG bot with context-aware conversations.
-
-**Objectives:**
-1. Chat History & ERD
-   o Design an ER Diagram for chat history.
-   o Define your own table names and structure to store sessions, messages, and context.
-   o Implement persistence (e.g., SQL DB) for storing user queries, bot responses, and retrieved context.
-2. Prompt Engineering
-   o Learn and apply key prompt engineering concepts:
-     • Instruction Prompting: guide the model with clear instructions.
-     • Role Prompting: set the assistant's persona.
-     • Few-shot Prompting: show examples to improve consistency.
-   o Experiment with rewriting prompts to improve response quality.
-3. Integration with RAG Bot
-   o Extend FastAPI endpoints:
-     • POST /chat → accepts a new user message, stores it, retrieves context from history + RAG, then calls the LLM.
-     • GET /history/{session_id} → returns the conversation history for a session.
-   o Ensure the bot responds with context-aware answers, using both history and retrieved documents.
-
-**Deliverables:**
-- [ ] ER Diagram of the chat history database (with custom naming & design).
-- [ ] Database implementation for storing chat history.
-- [ ] Extended FastAPI endpoints:
-  - [ ] POST/chat (context-aware chat with RAG + history).
-  - [ ] GET/history/{session_id} (retrieve stored history).
-- [ ] A short demo or documentation showing:
-  - [ ] How prompts were engineered and improved.
-  - [ ] How history + RAG improves the conversation quality.
-- [ ] GitHub Repository containing milestone code, with clear commits, branches, and documentation.
-- [ ] Add summarization of old chat history (to keep the context short but relevant).[Bonus]
+#### Deliverables:
+- [ ] FastAPI project for indexing/search  
+- [ ] Documentation for endpoints usage
 
 ---
 
-### Milestone 6: System Optimization & Final Demo
-**Status:** ⏳ Not Started  
-**Goal:** Optimize the system for performance, accuracy, and usability. Prepare the system for a final presentation/demo.
+### **Milestone 4: Retrieval & LLM Integration**
+**Status:** ⏳ *Not Started*  
+**Goal:** Implement document retrieval and integrate results with LLM. Extend FastAPI endpoints.
 
-**Objectives:**
-• Improve embedding/search performance.
-• Conduct final testing with multiple datasets.
-• Prepare a short presentation/demo script showing how the system works end-to-end.
+#### Objectives:
+- Add retrieval pipeline  
+- Pass retrieved docs to LLM for response generation  
+- Extend FastAPI with:
+  - `POST /ask` → query → retrieve → LLM response  
 
-**Deliverables:**
-- [ ] A fully functional RAG system running with FastAPI endpoints.
-- [ ] A demo presentation explaining:
-  - [ ] System architecture
-  - [ ] Challenges and solutions
-  - [ ] Example use cases
-- [ ] Create a UI chat page showing user messages, bot responses, user sessions and retrieved documents side by side.[Bonus]
+#### Deliverables:
+- [ ] Fully working retrieval + LLM integration  
+- [ ] Example cURL/Postman usage
+
+---
+
+### **Milestone 5: Chat History, Prompt Engineering & Contextual RAG**
+**Status:** ⏳ *Not Started*  
+**Goal:** Add chat history storage, improve prompts, and make RAG context-aware.
+
+#### Objectives:
+1. **Chat History & ERD**
+   - Design ERD  
+   - Define tables (sessions, messages, context)  
+   - Implement DB persistence  
+
+2. **Prompt Engineering**
+   - Instruction, role, and few-shot prompting  
+   - Experiment with improving prompts  
+
+3. **Integration**
+   - Extend FastAPI:
+     - `POST /chat` → history + RAG  
+     - `GET /history/{session_id}` → retrieve chat logs  
+
+#### Deliverables:
+- [ ] ERD  
+- [ ] Database implementation  
+- [ ] Extended FastAPI endpoints  
+- [ ] Demo showing prompt engineering + context improvements  
+- [ ] Summarization of old history *(Bonus)*
+
+---
+
+### **Milestone 6: System Optimization & Final Demo**
+**Status:** ⏳ *Not Started*  
+**Goal:** Optimize, test, and prepare a full demo.
+
+#### Objectives:
+- Improve embedding/search performance  
+- Test with multiple datasets  
+- Prepare presentation explaining system workflow  
+
+#### Deliverables:
+- [ ] Fully functional RAG system  
+- [ ] Demo presentation  
+- [ ] Optional UI chat page *(Bonus)*
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Language:** Python 3.10+
-- **Framework:** FastAPI
-- **LLM:** Qwen2.5:7b
-- **Indexing:** LangChain
-- **Vector Store:** TBD (FAISS / ChromaDB / Weaviate)
+- **Language:** Python 3.10+  
+- **Framework:** FastAPI  
+- **LLM:** Qwen2.5:7b  
+- **Indexing:** LangChain  
+- **Vector Store:** TBD (FAISS / ChromaDB / Weaviate)  
 - **Database:** TBD (SQLite / PostgreSQL)
 
 ---
