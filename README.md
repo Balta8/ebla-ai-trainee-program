@@ -7,20 +7,23 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 ## 📋 Program Guidelines
 
 ### Development Best Practices
-• **Dedicate focused time daily** to learning and coding.
-• **Keep detailed notes and comments** in your code to track your thought process.
-• **Try different approaches.** Treat mistakes as learning opportunities.
+**Dedicate focused time daily** to learning and coding.
+
+**Keep detailed notes and comments** in your code to track your thought process.
+
+**Try different approaches.** Treat mistakes as learning opportunities.
 
 ### Architecture & Design Patterns
-• **MVC (Model-View-Controller):** Follow MVC architecture principles when structuring your code.
+**MVC (Model-View-Controller):** Follow MVC architecture principles when structuring your code.
   - **Model:** Handle data and business logic
   - **View:** Manage presentation layer (UI/API responses)
   - **Controller:** Process user input and coordinate between Model and View
 
 ### Version Control
-• **Git/GitHub:** Save and push your code/scripts for each milestone using Git/GitHub.
-• **Clear commits:** Each milestone should have clear commits and documentation.
-• **Commit messages:** Write descriptive commit messages explaining what was changed and why.
+**Git/GitHub:** Save and push your code/scripts for each milestone using Git/GitHub.
+
+**Clear commits:** Each milestone should have clear commits and documentation.
+**Commit messages:** Write descriptive commit messages explaining what was changed and why.
 
 ---
 
@@ -62,7 +65,9 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 **Objectives:**
 • Prepare dataset (text files, articles, or documents).
+
 • Generate embeddings using a vector store (FAISS, ChromaDB, Weaviate, etc.).
+
 • Build a FastAPI service with endpoints:
   o POST /index → preprocess and index documents.
   o POST /search → accept a query, return relevant documents.
@@ -163,7 +168,8 @@ ebla-ai-trainee-program/
 ```
 
 ---
-**Note:** This README will be updated constantly as progress is made through each milestone.
 
 **Last Updated:** November 17, 2025
+
+**Note:** This README will be updated constantly as progress is made through each milestone.
 
