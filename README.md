@@ -42,17 +42,22 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ---
 
-### Milestone 2: Understanding RAG & Core Technologies
-**Status:** ⏳ Not Started  
-**Branch:** `milestone2` (to be created)  
-**Folder:** `milestones/milestone2/` (to be created)
+### Milestone 2: Understanding RAG & Core Technologies ✅
+**Status:** Completed  
+**Branch:** `main`  
+**Folder:** [`milestones/milestone2/`](./milestones/milestone2/)
 
-**Goal:** Understand Retrieval-Augmented Generation (RAG) architecture. Familiarize with a local LLM and indexing library.
+**Goal:** Understand Retrieval-Augmented Generation (RAG) architecture and build a working RAG system with local LLM.
 
-**Objectives:**
-- Study RAG architecture (retriever, generator, integration)
-- Install and configure a local LLM
-- Write initial scripts to interact with the chosen LLM and index documents
+**Key Deliverables:**
+- ✅ RAG concepts documentation and discussion summary
+- ✅ Local LLM integration (Ollama + Qwen2.5:7b)
+- ✅ Document indexing with LlamaIndex
+- ✅ MVC architecture implementation
+- ✅ Interactive Q&A system with vector search
+- ✅ Google Python Style Guide compliance
+
+[View Milestone 2 Details →](./milestones/milestone2/README.md)
 
 ---
 
@@ -82,11 +87,12 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ## 🛠️ Tech Stack
 
-- **Language:** Python 3.10+
-- **Framework:** FastAPI
-- **LLM:** Qwen2.5:7b
-- **Indexing:** LangChain
-- **Vector Store:** TBD (FAISS / ChromaDB / Weaviate)
+- **Language:** Python 3.13+
+- **Framework:** FastAPI (Milestone 3+)
+- **LLM:** Ollama (Qwen2.5:7b) - Local, offline
+- **Indexing:** LlamaIndex
+- **Embeddings:** HuggingFace (BAAI/bge-large-en-v1.5)
+- **Vector Store:** In-memory (will upgrade to FAISS / ChromaDB)
 - **Database:** TBD (SQLite / PostgreSQL)
 
 ---
@@ -99,15 +105,23 @@ ebla-ai-trainee-program/
 ├── requirements.txt                   # Python dependencies
 ├── .gitignore                        # Git ignore rules
 └── milestones/
-    ├── milestone1/                   # Milestone 1: Python Fundamentals
+    ├── milestone1/                   # ✅ Milestone 1: Python Fundamentals
     │   ├── README.md                 # Milestone 1 documentation
     │   ├── main.py                   # MVC demo
     │   ├── Controller/               # MVC Controller
     │   ├── Model/                    # MVC Model
     │   ├── View/                     # MVC View
     │   └── exercises/                # Python exercises
-    ├── milestone2/                   # Milestone 2 (coming soon)
+    ├── milestone2/                   # ✅ Milestone 2: RAG System
+    │   ├── README.md                 # Milestone 2 documentation
+    │   ├── main.py                   # RAG system entry point
+    │   ├── models/                   # LLM & Retriever models
+    │   ├── controllers/              # RAG Controller
+    │   ├── views/                    # Display layer
+    │   ├── data/                     # Sample documents
+    │   └── requirements.txt          # Milestone 2 dependencies
     ├── milestone3/                   # Milestone 3 (coming soon)
+    ├── milestone4/                   # Milestone 4 (coming soon)
     └── ...
 ```
 
@@ -143,8 +157,8 @@ python3 main.py
 
 | Milestone | Status | Branch | Folder |
 |-----------|--------|--------|--------|
-| 1. Python Fundamentals | ✅ Complete | `milestone1` | `milestones/milestone1/` |
-| 2. RAG & Core Tech | ⏳ Not Started | - | - |
+| 1. Python Fundamentals | ✅ Complete | `main` | `milestones/milestone1/` |
+| 2. RAG & Core Tech | ✅ Complete | `main` | `milestones/milestone2/` |
 | 3. Data & Indexing | ⏳ Not Started | - | - |
 | 4. Retrieval & LLM | ⏳ Not Started | - | - |
 | 5. Chat & Prompts | ⏳ Not Started | - | - |
@@ -152,7 +166,7 @@ python3 main.py
 
 ---
 
-**Last Updated:** November 17, 2025
+**Last Updated:** November 18, 2025
 
-**Note:** This README will be updated constantly as progress is made through each milestone.
+**Note:** This README is updated constantly as progress is made through each milestone.
 
