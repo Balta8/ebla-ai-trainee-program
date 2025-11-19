@@ -24,6 +24,9 @@
 ---
 
 # 📘 Discussion Summary — RAG Concepts
+# Source : 
+- [lightning-ai](https://lightning.ai/lightning-ai/environments/rag-using-llama-3-by-meta-ai?view=public&section=featured)
+- [google-cloud](https://cloud.google.com/use-cases/retrieval-augmented-generation)
 
 ## **What is RAG (Retrieval-Augmented Generation)?**
 
