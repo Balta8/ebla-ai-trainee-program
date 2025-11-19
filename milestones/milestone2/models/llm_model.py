@@ -15,7 +15,6 @@ class LocalLLM:
             model_name: Name of the model to run via Ollama.
         """
         self.model_name = model_name
-        self._check_connection()
 
     def _check_connection(self) -> None:
         """Check if we can connect to Ollama."""
@@ -50,5 +49,7 @@ class LocalLLM:
 # Quick test
 if __name__ == "__main__":
     llm = LocalLLM()
-    response = llm.generate("Hello! Say something short.")
+    llm._check_connection() # Check connection on startup
+    input_prompt = input("Enter your prompt: ")
+    response = llm.generate(input_prompt)
     print(f"Response: {response}")

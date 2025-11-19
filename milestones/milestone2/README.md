@@ -24,6 +24,9 @@
 ---
 
 # 📘 Discussion Summary — RAG Concepts
+# Source : 
+- [lightning-ai](https://lightning.ai/lightning-ai/environments/rag-using-llama-3-by-meta-ai?view=public&section=featured)
+- [google-cloud](https://cloud.google.com/use-cases/retrieval-augmented-generation)
 
 ## **What is RAG (Retrieval-Augmented Generation)?**
 
@@ -62,7 +65,7 @@ RAG is an AI framework that combines **information retrieval** with **text gener
 
 ### **LLM: Ollama + Qwen2.5:7b**
 - **Ollama:** Tool for running LLMs locally
-- **Qwen2.5:7b:** 7-billion parameter model by Alibaba
+- **Qwen2.5:7b:** 7-billion parameter model 
 - Runs completely offline, no API costs
 
 ### **Indexing: LlamaIndex**
