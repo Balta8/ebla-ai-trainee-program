@@ -1,6 +1,7 @@
 """Module for document retrieval using LlamaIndex"""
 
 from typing import List, Optional
+from pathlib import Path
 from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
@@ -53,7 +54,7 @@ class DocumentRetriever:
             recursive: Whether to search subdirectories.
         """
         if required_exts is None:
-            required_exts = [".pdf", ".txt"]
+            required_exts = [".txt"]
             
         # Load documents from directory
         loader = SimpleDirectoryReader(
@@ -109,20 +110,21 @@ class DocumentRetriever:
             return str(response)
 
 
-# Quick test
+# Build index from data
 if __name__ == "__main__":
     retriever = DocumentRetriever()
     
-    # Test with text documents
-    docs = [
-        "Python is a high-level programming language.",
-        "Ebla Computer Consultancy is a technology solutions provider specializing in IT consulting",
-        "FastAPI is a modern web framework for building APIs."
-    ]
+    # Get data directory
+    data_dir = str(Path(__file__).parent.parent / "data")
     
-    retriever.build_index_from_texts(docs)
-    answer = retriever.query("What is Ebla?")
-    
-    print("Query answer:")
-    print(answer)
-    
+    # Build index
+    retriever.build_index_from_directory(data_dir)
+
+    # Show documents
+    nodes = retriever.index.docstore.docs
+    print(f"\nTotal documents: {len(nodes)}\n")
+
+    for i, (node_id, node) in enumerate(nodes.items(), 1):
+        file_name = node.metadata.get('file_name', 'Unknown')
+        print(f"document #{i} (from {file_name})")
+        print(f"Content: {node.text[:200]}...\n")

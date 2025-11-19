@@ -63,7 +63,7 @@ def main() -> None:
         if question.strip():
             controller.run_query(question)
 
-
+# Start the application
 if __name__ == "__main__":
     main()
 
