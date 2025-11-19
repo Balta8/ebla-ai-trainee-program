@@ -23,7 +23,7 @@ def load_documents(file_paths: list[str]) -> list[str]:
 
 def main() -> None:
     """Main function to run the system."""
-    # Sample documents - you can change these paths
+    # Sample documents 
     file_paths = ["milestones/milestone2/data/sample.txt"]
     documents = load_documents(file_paths)
     

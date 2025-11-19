@@ -1,7 +1,5 @@
 """Controller module orchestrating retrieval + generation."""
 
-from typing import List
-
 from models.llm_model import LocalLLM
 from models.retriever import DocumentRetriever
 from views.view import View
@@ -29,6 +27,5 @@ class RAGController:
         Args:
             question: The user query to answer.
         """
-        # The new retriever.query() returns a string response directly
         response: str = self.retriever.query(question)
         self.view.show_response(response)

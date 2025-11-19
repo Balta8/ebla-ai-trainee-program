@@ -1,4 +1,4 @@
-"""Module for document retrieval using LlamaIndex with PDF support."""
+"""Module for document retrieval using LlamaIndex"""
 
 from typing import List, Optional
 from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
@@ -7,7 +7,7 @@ from llama_index.llms.ollama import Ollama
 
 
 class DocumentRetriever:
-    """Document retrieval with LlamaIndex + Ollama, supports PDF files."""
+    """Document retrieval with LlamaIndex + Ollama."""
 
     def __init__(
         self, 
@@ -66,7 +66,7 @@ class DocumentRetriever:
         
         # Create vector store index
         self.index = VectorStoreIndex.from_documents(docs)
-        print(f"✅ Indexed {len(docs)} documents from {input_dir}")
+        print(f"Indexed {len(docs)} documents from {input_dir}")
 
     def build_index_from_texts(self, documents: List[str]) -> None:
         """
@@ -79,7 +79,7 @@ class DocumentRetriever:
         
         docs = [Document(text=doc) for doc in documents]
         self.index = VectorStoreIndex.from_documents(docs)
-        print(f"✅ Indexed {len(docs)} text documents.")
+        print(f"Indexed {len(docs)} text documents.")
 
     def query(self, question: str, streaming: bool = False) -> str:
         """
