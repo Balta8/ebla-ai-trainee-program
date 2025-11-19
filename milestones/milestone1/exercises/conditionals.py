@@ -8,11 +8,14 @@ def check_grade(score: int) -> str:
         return "Very Good"
     elif score >= 70:
         return "Good"
-    else:
+    elif score >= 60:
         return "Pass"
+    else:
+        return "Fail"
 
 # Run the function to see output
 if __name__ == "__main__":
-    test_score = 85
-    result = check_grade(test_score)
-    print(f"Score: {test_score}, Grade: {result}")
+    test_scores = [85, 92, 76, 54, 67]
+    for score in test_scores:
+        result = check_grade(score)
+        print(f"Score: {score}, Grade: {result}")

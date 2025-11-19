@@ -57,8 +57,8 @@ Functions allow reusable logic with:
 ## 📂 Project Structure
 
 ```
-ebla-ai-trainee-program/
-├── README.md                           # Project documentation
+milestones/milestone1/
+├── README.md                           # This file
 ├── requirements.txt                    # Python dependencies
 ├── main.py                            # MVC demo entry point
 ├── Controller/
@@ -86,7 +86,7 @@ ebla-ai-trainee-program/
 1. **Clone the repository**
    ```bash
    git clone https://github.com/Balta8/ebla-ai-trainee-program.git
-   cd ebla-ai-trainee-program
+   cd ebla-ai-trainee-program/milestones/milestone1
    ```
 
 2. **Create virtual environment** (Optional but recommended)
@@ -101,7 +101,7 @@ ebla-ai-trainee-program/
    ```bash
    pip install -r requirements.txt
    ```
-   *Note: Milestone 1 uses only standard Python libraries, so no external packages are needed yet.*
+   *Note: Milestone 1 uses only standard Python libraries, so no external packages are required.*
 
 ### Running the Project
 

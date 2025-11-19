@@ -18,3 +18,9 @@ class PersonController:
         # Use view to display
         self.view.display_person_info(person.name, person.age)
         self.view.display_introduction(person.introduce())
+
+# Example usage
+if __name__ == "__main__":
+    controller = PersonController()
+    controller.create_and_display_person("Alice", 30)
+    controller.create_and_display_person("Bob", 25)
