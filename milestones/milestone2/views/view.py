@@ -17,3 +17,13 @@ class View:
         """Display the model's generated response."""
         print("💡 Model Response:")
         print(response)
+
+# Quick test
+if __name__ == "__main__":
+    docs = [
+        "Python is a high-level programming language known for its simplicity and readability. It is widely used in web development, data science, artificial intelligence, and automation.",
+        "Ebla Computer Consultancy provides innovative IT solutions including cloud computing and software development.",
+        "Machine learning algorithms enable computers to learn from data without being explicitly programmed."
+    ]
+    View.show_documents(docs)
+    

@@ -4,7 +4,7 @@ from typing import List, Optional
 from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
-
+from llama_index.core import Document
 
 class DocumentRetriever:
     """Document retrieval with LlamaIndex + Ollama."""
@@ -35,7 +35,6 @@ class DocumentRetriever:
         # Configure global settings
         Settings.embed_model = self.embed_model
         Settings.llm = self.llm
-        
         self.similarity_top_k = similarity_top_k
         self.index = None
 
@@ -75,7 +74,6 @@ class DocumentRetriever:
         Args:
             documents: List of text documents.
         """
-        from llama_index.core import Document
         
         docs = [Document(text=doc) for doc in documents]
         self.index = VectorStoreIndex.from_documents(docs)
@@ -118,12 +116,12 @@ if __name__ == "__main__":
     # Test with text documents
     docs = [
         "Python is a high-level programming language.",
-        "Machine learning is a subset of artificial intelligence.",
+        "Ebla Computer Consultancy is a technology solutions provider specializing in IT consulting",
         "FastAPI is a modern web framework for building APIs."
     ]
     
     retriever.build_index_from_texts(docs)
-    answer = retriever.query("What is Python?")
+    answer = retriever.query("What is Ebla?")
     
     print("Query answer:")
     print(answer)

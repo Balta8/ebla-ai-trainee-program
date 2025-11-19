@@ -1,13 +1,17 @@
-Python is a high-level, interpreted programming language known for its simplicity and readability. It was created by Guido van Rossum and first released in 1991. Python supports multiple programming paradigms, including procedural, object-oriented, and functional programming.
+Ebla Computer Consultancy is a technology solutions provider specializing in IT consulting and enterprise software. It was founded in [insert year] and operates across multiple industries, providing innovative solutions to organizations.
 
-Python is widely used in various domains such as web development, data science, machine learning, artificial intelligence, automation, and scientific computing. Its extensive standard library and rich ecosystem of third-party packages make it a versatile choice for developers.
+Ebla offers services in areas such as enterprise content management, workflow automation, digital transformation, and IT infrastructure solutions. The company focuses on helping clients improve operational efficiency, streamline business processes, and implement scalable technology systems.
 
-Some key features of Python include:
-- Easy to learn and read syntax
-- Dynamic typing
-- Automatic memory management
-- Large standard library
-- Cross-platform compatibility
-- Strong community support
+Some key features of Ebla include:
 
-Popular Python frameworks include Django and Flask for web development, NumPy and Pandas for data analysis, TensorFlow and PyTorch for machine learning, and many more.
+Expertise in enterprise IT solutions
+
+Partnership with leading technology providers
+
+Customized services for public and private sectors
+
+Focus on digital transformation and automation
+
+Strong regional presence and client support
+
+Popular solutions and platforms supported by Ebla include Microsoft enterprise products, content management systems, and workflow automation tools
