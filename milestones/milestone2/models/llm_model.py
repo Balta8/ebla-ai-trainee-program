@@ -16,7 +16,7 @@ class LocalLLM:
         """
         self.model_name = model_name
 
-    def _check_connection(self) -> None:
+    def check_connection(self) -> None:
         """Check if we can connect to Ollama."""
         try:
             # Simple connection test
@@ -49,7 +49,7 @@ class LocalLLM:
 # Quick test
 if __name__ == "__main__":
     llm = LocalLLM()
-    llm._check_connection() # Check connection on startup
+    llm.check_connection()  # Check connection on startup
     input_prompt = input("Enter your prompt: ")
     response = llm.generate(input_prompt)
     print(f"Response: {response}")

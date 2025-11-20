@@ -2,10 +2,11 @@
 
 from typing import List, Optional
 from pathlib import Path
-from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
+from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader, Document
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
-from llama_index.core import Document
+from llama_index.core.node_parser import TokenTextSplitter
+from llama_index.core.ingestion import IngestionPipeline
 
 class DocumentRetriever:
     """Document retrieval with LlamaIndex + Ollama."""
@@ -39,6 +40,16 @@ class DocumentRetriever:
         self.similarity_top_k = similarity_top_k
         self.index = None
 
+        # Setup chunker 
+        self.chunker = TokenTextSplitter(
+            chunk_size=128,
+            chunk_overlap=16
+        )
+
+        self.pipeline = IngestionPipeline(
+            transformations=[self.chunker]
+        )
+
     def build_index_from_directory(
         self, 
         input_dir: str,
@@ -46,7 +57,7 @@ class DocumentRetriever:
         recursive: bool = True
     ) -> None:
         """
-        Build index from a directory of documents.
+        Build index from a directory of documents with chunking.
 
         Args:
             input_dir: Path to directory containing documents.
@@ -55,30 +66,39 @@ class DocumentRetriever:
         """
         if required_exts is None:
             required_exts = [".txt"]
-            
-        # Load documents from directory
+
+        # Load raw docs 
         loader = SimpleDirectoryReader(
             input_dir=input_dir,
             required_exts=required_exts,
             recursive=recursive
         )
         docs = loader.load_data()
-        
-        # Create vector store index
-        self.index = VectorStoreIndex.from_documents(docs)
-        print(f"Indexed {len(docs)} documents from {input_dir}")
+
+        # Apply chunking
+        nodes = self.pipeline.run(documents=docs)
+
+        # Build index
+        self.index = VectorStoreIndex(nodes)
+
+        print(f"Indexed {len(nodes)} chunks from directory: {input_dir}")
 
     def build_index_from_texts(self, documents: List[str]) -> None:
         """
-        Build index from a list of text strings.
+        Build index from a list of text strings with chunking.
 
         Args:
             documents: List of text documents.
         """
-        
         docs = [Document(text=doc) for doc in documents]
-        self.index = VectorStoreIndex.from_documents(docs)
-        print(f"Indexed {len(docs)} text documents.")
+
+        # Apply chunking
+        nodes = self.pipeline.run(documents=docs)
+
+        # Build index
+        self.index = VectorStoreIndex(nodes)
+
+        print(f"Indexed {len(nodes)} chunks from text list.")
 
     def query(self, question: str, streaming: bool = False) -> str:
         """
@@ -113,18 +133,18 @@ class DocumentRetriever:
 # Build index from data
 if __name__ == "__main__":
     retriever = DocumentRetriever()
-    
+
     # Get data directory
     data_dir = str(Path(__file__).parent.parent / "data")
-    
-    # Build index
+
+    # Build index with real chunking
     retriever.build_index_from_directory(data_dir)
 
-    # Show documents
+    # Show index stats
     nodes = retriever.index.docstore.docs
-    print(f"\nTotal documents: {len(nodes)}\n")
+    print(f"\nTotal chunks: {len(nodes)}\n")
 
     for i, (node_id, node) in enumerate(nodes.items(), 1):
-        file_name = node.metadata.get('file_name', 'Unknown')
-        print(f"document #{i} (from {file_name})")
-        print(f"Content: {node.text[:200]}...\n")
+        file_name = node.metadata.get("file_name", "Unknown")
+        print(f"Chunk #{i} (from {file_name})")
+        print(f"{node.text[:200]}...\n")
