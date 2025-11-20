@@ -110,43 +110,72 @@ milestone2/
     └── about_me.txt                   # Sample personal info
 ```
 
+**How to run each file:**
+- `python3 main.py` → Full RAG system with interactive Q&A
+- `python3 models/llm_model.py` → Test LLM interaction only
+- `python3 models/retriever.py` → Test document indexing only
+
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.10 or higher
-- Ollama installed ([ollama.ai](https://ollama.ai))
-- Git
+- **Python 3.10 or higher** - Check with `python3 --version`
+- **Ollama installed** - Download from [ollama.ai](https://ollama.ai)
+- **Git** - For cloning the repository
+- **8GB+ RAM** - Recommended for running Qwen2.5:7b model
 
 ### Installation
 
-1. **Install Ollama and pull the model**
-   ```bash
-   # Install Ollama from https://ollama.ai
-   
-   # Pull the Qwen model
-   ollama pull qwen2.5:7b
-   
-   # Verify Ollama is running
-   ollama list
-   ```
+#### **Step 1: Clone the Repository**
+```bash
+git clone https://github.com/Balta8/ebla-ai-trainee-program.git
+cd ebla-ai-trainee-program/milestones/milestone2
+```
 
-2. **Navigate to milestone2 folder**
-   ```bash
-   cd milestone2
-   ```
+#### **Step 2: Install Ollama and Pull Model**
+```bash
+# Install Ollama from https://ollama.ai
+# Then pull the Qwen model (this downloads ~4GB)
+ollama pull qwen2.5:7b
 
-3. **Create virtual environment** (Optional but recommended)
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On macOS/Linux
-   ```
+# Verify installation
+ollama list
+# You should see: qwen2.5:7b
 
-4. **Install Python dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Start Ollama server (if not auto-started)
+ollama serve
+```
+
+#### **Step 3: Setup Python Environment**
+```bash
+# Create virtual environment (recommended)
+python3 -m venv venv
+
+# Activate it
+source venv/bin/activate          # On macOS/Linux
+# OR
+venv\Scripts\activate             # On Windows
+```
+
+#### **Step 4: Install Python Dependencies**
+```bash
+# Install all required packages
+pip install -r requirements.txt
+
+# This installs:
+# - llama-index==0.14.8
+# - llama-index-core==0.14.8
+# - llama-index-embeddings-huggingface==0.6.1
+# - llama-index-llms-ollama==0.9.0
+# - ollama==0.6.1
+```
+
+#### **Step 5: Verify Setup**
+```bash
+# Quick test - should print "Connected to Ollama..."
+python3 -c "from models.llm_model import LocalLLM; llm = LocalLLM(); llm.check_connection()"
+```
 
 ---
 
@@ -227,7 +256,38 @@ Content: Ebla Computer Consultancy is a technology solutions provider...
 
 ---
 
-## 📚 Key Learnings
+## � Troubleshooting
+
+### **Ollama connection issues:**
+```bash
+# Make sure Ollama is running
+ollama serve
+
+# In another terminal, test the model
+ollama run qwen2.5:7b "Hello"
+```
+
+### **Import errors:**
+```bash
+# Reinstall dependencies
+pip install -r requirements.txt --upgrade
+```
+
+### **Port already in use:**
+```bash
+# Kill existing Ollama process
+pkill ollama
+ollama serve
+```
+
+### **Slow response times:**
+- First query is always slower (model loading)
+- Subsequent queries are faster
+- Consider using smaller models for faster responses
+
+---
+
+## 📚� Key Learnings
 
 ### **RAG Architecture**
 - ✅ Understanding retriever-generator pipeline
