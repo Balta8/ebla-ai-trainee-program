@@ -1,0 +1,6 @@
+# LangChain and RAG
+langchain==0.1.0
+langchain-community==0.0.10
+
+# PDF support
+pypdf==3.17.4
