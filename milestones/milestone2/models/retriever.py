@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 from pathlib import Path
-from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader, Document
+from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
 from llama_index.core.node_parser import TokenTextSplitter
@@ -83,23 +83,6 @@ class DocumentRetriever:
 
         print(f"Indexed {len(nodes)} chunks from directory: {input_dir}")
 
-    def build_index_from_texts(self, documents: List[str]) -> None:
-        """
-        Build index from a list of text strings with chunking.
-
-        Args:
-            documents: List of text documents.
-        """
-        docs = [Document(text=doc) for doc in documents]
-
-        # Apply chunking
-        nodes = self.pipeline.run(documents=docs)
-
-        # Build index
-        self.index = VectorStoreIndex(nodes)
-
-        print(f"Indexed {len(nodes)} chunks from text list.")
-
     def query(self, question: str, streaming: bool = False) -> str:
         """
         Query the index with a question.
@@ -112,7 +95,7 @@ class DocumentRetriever:
             The generated answer.
         """
         if self.index is None:
-            raise ValueError("Index not yet built. Call build_index_*() first.")
+            raise ValueError("Index not yet built. Call build_index_from_directory() first.")
 
         # Setup query engine
         query_engine = self.index.as_query_engine(
