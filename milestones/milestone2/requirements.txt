@@ -1,5 +1,8 @@
-llama-index
-llama-index-core
-llama-index-embeddings-huggingface
-llama-index-llms-ollama
-ollama
+# LlamaIndex core packages
+llama-index==0.14.8
+llama-index-core==0.14.8
+llama-index-embeddings-huggingface==0.6.1
+llama-index-llms-ollama==0.9.0
+
+# Ollama Python client
+ollama==0.6.1
