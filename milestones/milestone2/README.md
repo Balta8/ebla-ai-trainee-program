@@ -9,6 +9,10 @@
 
 #### Deliverables:
 - [x] Discussion summary of RAG concepts
+- [x] **Python script demonstrating interaction with local LLM**
+  - `models/llm_model.py` - Run standalone to test LLM interaction
+- [x] **Simple index build demonstration**
+  - `models/retriever.py` - Run standalone to test document indexing
 - [x] LocalLLM class for Ollama integration
   - `models/llm_model.py` - LLM wrapper for text generation
 - [x] DocumentRetriever class for indexing and retrieval
@@ -19,7 +23,8 @@
   - `controllers/rag_controller.py` - Coordinates RAG workflow
   - `main.py` - Main entry point for RAG system
 - [x] Sample data for testing
-  - `data/sample.txt` - Sample document for indexing
+  - `data/sample.txt` - Sample Ebla company document
+  - `data/about_me.txt` - Sample personal information
 
 ---
 
@@ -72,8 +77,9 @@ RAG is an AI framework that combines **information retrieval** with **text gener
 - Framework for connecting LLMs with external data
 - Handles document loading, chunking, and indexing
 - Provides query engines for retrieval
+- Uses TokenTextSplitter for smart document chunking (128 tokens, 16 overlap)
 
-### **Embeddings: HuggingFace (BAAI/bge-small-en-v1.5)**
+### **Embeddings: HuggingFace (BAAI/bge-large-en-v1.5)**
 - Converts text to vector representations
 - Free and runs locally
 - Efficient for similarity search
@@ -99,8 +105,9 @@ milestone2/
 │   └── view.py                        # Display layer
 ├── controllers/
 │   └── rag_controller.py              # RAG workflow coordinator
-└── data/
-    └── sample.txt                     # Sample document
+├── data/
+    ├── sample.txt                     # Sample Ebla company info
+    └── about_me.txt                   # Sample personal info
 ```
 
 ---
@@ -151,37 +158,71 @@ python3 main.py
 ```
 
 This will:
-1. Load documents from `data/sample.txt`
-2. Build vector index
-3. Start interactive Q&A session
-4. Type 'quit' to exit
+1. Load documents from `data/` directory
+2. Chunk documents into smaller pieces (128 tokens each)
+3. Build vector index with embeddings
+4. Start interactive Q&A session
+5. Type 'quit' to exit
 
 ### **Test Individual Components:**
 
-**Test LLM only:**
+**Test LLM interaction:**
 ```bash
 python3 models/llm_model.py
 ```
+This demonstrates direct interaction with the local LLM (Ollama + Qwen2.5:7b).
 
-**Test Retriever only:**
+**Test index building:**
 ```bash
 python3 models/retriever.py
 ```
+This demonstrates document indexing and chunking process.
 
 ---
 
 ## 💡 Example Usage
 
+### **Full RAG System:**
+
 ```
 Building document index...
-Indexed 1 documents.
+Indexed 5 chunks from directory: /path/to/milestone2/data
 
 Enter your question (or 'quit' to exit): What is Python?
 
-Retrieving relevant documents...
-Generating response...
-Answer: Python is a high-level, interpreted programming language 
+💡 Model Response:
+Python is a high-level, interpreted programming language 
 known for its simplicity and readability...
+
+Enter your question (or 'quit' to exit): quit
+
+Goodbye!
+```
+
+### **LLM Interaction Demo (llm_model.py):**
+
+```bash
+$ python3 models/llm_model.py
+Connected to Ollama with model: qwen2.5:7b
+Enter your prompt: Tell me a joke about programming
+
+Response: Why do programmers prefer dark mode? 
+Because light attracts bugs! 🐛
+```
+
+### **Index Building Demo (retriever.py):**
+
+```bash
+$ python3 models/retriever.py
+Indexed 5 chunks from directory: /path/to/data
+
+Total chunks: 5
+
+Chunk #1 (from about_me.txt)
+Content: Ahmed Mohamed is a technology enthusiast and AI trainee...
+
+Chunk #2 (from sample.txt)
+Content: Ebla Computer Consultancy is a technology solutions provider...
 ```
 
 ---
@@ -200,10 +241,12 @@ known for its simplicity and readability...
 
 ### **Document Indexing**
 - ✅ Converting text to embeddings
+- ✅ Smart chunking with TokenTextSplitter
 - ✅ Vector storage and retrieval
-- ✅ Query processing
+- ✅ Query processing with similarity search
 
 ### **MVC Architecture**
+
 - ✅ Separating concerns (Model, View, Controller)
 - ✅ Modular and testable code
 - ✅ Clean code principles
