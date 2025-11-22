@@ -62,3 +62,5 @@ Thumbs.db
 
 # Project specific
 *.log
+logs/
+chroma_db/
