@@ -28,7 +28,7 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ### Milestone 1: Learning Python ✅
 **Status:** Completed  
-**Branch:** `milestone1`  
+**Branch:** `main`  
 **Folder:** [`milestones/milestone1/`](./milestones/milestone1/)
 
 **Goal:** Gain a solid understanding of Python basics and write clean, structured code.
@@ -82,7 +82,7 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 ---
 
 ### Milestone 4: Retrieval & LLM Integration
-**Status:** ⏳ Not Started  
+**Status:** Started  
 **Goal:** Implement retrieval of relevant documents and integrate with local LLM.
 
 ---
@@ -104,9 +104,9 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 - **Language:** Python 3.13+
 - **Framework:** FastAPI (Milestone 3+)
 - **LLM:** Ollama (Qwen2.5:7b) - Local, offline
-- **Indexing:** LangChain
-- **Embeddings:** HuggingFace (sentence-transformers/all-MiniLM-L6-v2)
-- **Vector Store:** ChromaDB (persistent storage)
+- **Indexing:** LlamaIndex, LangChain
+- **Embeddings:** HuggingFace (BAAI/bge-large-en-v1.5, sentence-transformers/all-MiniLM-L6-v2)
+- **Vector Store:** In-memory, ChromaDB (persistent storage)
 - **Database:** TBD (SQLite / PostgreSQL)
 
 ---
@@ -185,7 +185,7 @@ python3 main.py
 | 1. Python Fundamentals | ✅ Complete | `main` | `milestones/milestone1/` |
 | 2. RAG & Core Tech | ✅ Complete | `main` | `milestones/milestone2/` |
 | 3. Data & Indexing | ✅ Complete | `main` | `milestones/milestone3/` |
-| 4. Retrieval & LLM | ⏳ Not Started | - | - |
+| 4. Retrieval & LLM | ⏳ Started | `main` | `milestones/milestone4/` |
 | 5. Chat & Prompts | ⏳ Not Started | - | - |
 | 6. Final Demo | ⏳ Not Started | - | - |
 
