@@ -1,11 +1,12 @@
 """CLI view for displaying messages and results."""
 
-from typing import List, Tuple
+from typing import List, Tuple, Any
 from langchain_core.documents import Document
+from .base_view import BaseView
 
 
-class CLIView:
-    """Command-line interface view for document indexing system."""
+class CLIView(BaseView):
+    """CLI View for displaying messages and results."""
     
     @staticmethod
     def show_message(message: str):

@@ -4,6 +4,9 @@ from langchain_community.document_loaders import DirectoryLoader, TextLoader, Py
 from typing import List
 from langchain_core.documents import Document
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class DocumentLoader:
     """Load documents from a directory using LangChain."""
@@ -15,7 +18,11 @@ class DocumentLoader:
         Args:
             documents_path: Path to the directory containing documents
         """
-        self.documents_path = documents_path
+        self.documents_path = os.path.abspath(documents_path)
+        if not os.path.exists(self.documents_path):
+            logger.error(f"Directory not found: {self.documents_path}")
+            raise ValueError(f"Directory not found: '{documents_path}' (absolute path: {self.documents_path})")
+        logger.info(f"DocumentLoader initialized with path: {self.documents_path}")
     
     def load_documents(self) -> List[Document]:
         """
@@ -51,8 +58,10 @@ class DocumentLoader:
             documents.extend(pdf_documents)
             
             if not documents:
+                logger.warning(f"No documents found in {self.documents_path}")
                 raise ValueError(f"No documents found in {self.documents_path}")
             
+            logger.info(f"Loaded {len(documents)} documents: {len(txt_documents)} text, {len(pdf_documents)} PDF")
             print(f"Loaded {len(documents)} documents:")
             print(f"   - {len(txt_documents)} text files")
             print(f"   - {len(pdf_documents)} PDF files")
@@ -60,6 +69,7 @@ class DocumentLoader:
             return documents
             
         except Exception as e:
+            logger.error(f"Error loading documents: {str(e)}")
             raise Exception(f"Error loading documents: {str(e)}")
         
 # Example usage

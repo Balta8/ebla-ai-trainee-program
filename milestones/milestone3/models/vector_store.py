@@ -1,7 +1,7 @@
 """ChromaDB vector store manager."""
 
-from document_loader import DocumentLoader
-from text_processor import TextProcessor
+from models.document_loader import DocumentLoader
+from models.text_processor import TextProcessor
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document

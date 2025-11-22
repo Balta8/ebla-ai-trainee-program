@@ -3,7 +3,7 @@ import os
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from typing import List
-from document_loader import DocumentLoader
+from models.document_loader import DocumentLoader
 
 
 class TextProcessor:
