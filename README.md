@@ -61,9 +61,23 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ---
 
-### Milestone 3: Data Preparation & Indexing
-**Status:** ⏳ Not Started  
+### Milestone 3: Data Preparation & Indexing ✅
+**Status:** Completed  
+**Branch:** `main`  
+**Folder:** [`milestones/milestone3/`](./milestones/milestone3/)
+
 **Goal:** Preprocess text data, create embeddings, and index documents via FastAPI endpoints.
+
+**Key Deliverables:**
+- ✅ FastAPI REST API with `/index` and `/search` endpoints
+- ✅ Document indexing (PDF & TXT) with LangChain
+- ✅ ChromaDB vector store integration
+- ✅ Pydantic schemas for request/response validation
+- ✅ MVC architecture with Dependency Injection
+- ✅ Advanced logging system
+- ✅ Comprehensive API documentation (Swagger UI)
+
+[View Milestone 3 Details →](./milestones/milestone3/README.md)
 
 ---
 
@@ -90,9 +104,9 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 - **Language:** Python 3.13+
 - **Framework:** FastAPI (Milestone 3+)
 - **LLM:** Ollama (Qwen2.5:7b) - Local, offline
-- **Indexing:** LlamaIndex
-- **Embeddings:** HuggingFace (BAAI/bge-large-en-v1.5)
-- **Vector Store:** In-memory (will upgrade to FAISS / ChromaDB)
+- **Indexing:** LangChain
+- **Embeddings:** HuggingFace (sentence-transformers/all-MiniLM-L6-v2)
+- **Vector Store:** ChromaDB (persistent storage)
 - **Database:** TBD (SQLite / PostgreSQL)
 
 ---
@@ -120,7 +134,18 @@ ebla-ai-trainee-program/
     │   ├── views/                    # Display layer
     │   ├── data/                     # Sample documents
     │   └── requirements.txt          # Milestone 2 dependencies
-    ├── milestone3/                   # Milestone 3 (coming soon)
+    ├── milestone3/                   # ✅ Milestone 3: FastAPI RAG
+    │   ├── README.md                 # Milestone 3 documentation
+    │   ├── app.py                    # FastAPI application
+    │   ├── main.py                   # CLI tool
+    │   ├── models/                   # Document loader, text processor, vector store
+    │   ├── controllers/              # Document controller
+    │   ├── views/                    # CLI & Base views
+    │   ├── routers/                  # API endpoints
+    │   ├── schemas/                  # Pydantic models
+    │   ├── utils/                    # Logging config
+    │   ├── data/                     # EBLA documents
+    │   └── requirements.txt          # Milestone 3 dependencies
     ├── milestone4/                   # Milestone 4 (coming soon)
     └── ...
 ```
@@ -159,14 +184,14 @@ python3 main.py
 |-----------|--------|--------|--------|
 | 1. Python Fundamentals | ✅ Complete | `main` | `milestones/milestone1/` |
 | 2. RAG & Core Tech | ✅ Complete | `main` | `milestones/milestone2/` |
-| 3. Data & Indexing | ⏳ Not Started | - | - |
+| 3. Data & Indexing | ✅ Complete | `main` | `milestones/milestone3/` |
 | 4. Retrieval & LLM | ⏳ Not Started | - | - |
 | 5. Chat & Prompts | ⏳ Not Started | - | - |
 | 6. Final Demo | ⏳ Not Started | - | - |
 
 ---
 
-**Last Updated:** November 18, 2025
+**Last Updated:** November 22, 2025
 
 **Note:** This README is updated constantly as progress is made through each milestone.
 
