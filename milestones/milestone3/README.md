@@ -23,7 +23,6 @@ milestone3/
 ├── main.py                   # CLI entry point (optional)
 ├── requirements.txt          # Project dependencies
 ├── .gitignore                # Git ignore rules
-├── venv/                     # Virtual environment (isolated)
 ├── routers/                  # HTTP Route Handlers (Thin Layer)
 │   ├── index.py              # Indexing endpoint 
 │   └── search.py             # Search endpoint 
@@ -43,8 +42,6 @@ milestone3/
 │   ├── base_view.py          # Abstract base class
 │   └── cli_view.py           # CLI presentation layer
 ├── data/                     # Document dataset (PDFs & TXTs)
-├── chroma_db/                # ChromaDB persistent storage
-└── logs/                     # Application logs
 ```
 
 ## 🔍 How It Works
@@ -105,8 +102,7 @@ uvicorn app:app --reload --host 0.0.0.0 --port 8000
 ```
 
 - **Swagger UI**: [http://localhost:8000/docs](http://localhost:8000/docs)
-- **ReDoc**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
-
+  
 ### Option 2: Run CLI (Optional)
 
 ```bash
@@ -289,14 +285,4 @@ kill -9 <PID>  # Kill it
 # Or use a different port:
 uvicorn app:app --reload --port 8001
 ```
-
-## 📚 Next Steps
-
-This milestone provides the foundation for:
-- **Milestone 4**: RAG (Retrieval-Augmented Generation) with LLM integration
-- **Milestone 5**: Advanced features (re-ranking, hybrid search, etc.)
-
-## 📄 License
-
-Part of the EBLA AI Trainee Program.
 
