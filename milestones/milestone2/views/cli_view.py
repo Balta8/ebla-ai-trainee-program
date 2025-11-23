@@ -18,16 +18,6 @@ class View:
         print("💡 Model Response:")
         print(response)
 
-    @staticmethod
-    def get_user_input() -> str:
-        """Get user input from the console."""
-        return input("Enter your question: ")
-
-    @staticmethod
-    def display_message(message: str) -> None:
-        """Display a message to the user."""
-        print(message)
-
 # Quick test
 if __name__ == "__main__":
     docs = [

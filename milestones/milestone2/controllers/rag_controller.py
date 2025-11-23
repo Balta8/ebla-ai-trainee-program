@@ -1,7 +1,7 @@
 """Controller module orchestrating retrieval + generation."""
 
-from models.retriever import DocumentRetriever
-from views.view import View
+from services.rag_service import DocumentRetriever
+from views.cli_view import View
 
 class RAGController:
     """Controller for retrieval‑augmented generation flow."""

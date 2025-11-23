@@ -1,12 +1,10 @@
 """Module for document retrieval using LlamaIndex"""
 
 from typing import List, Optional
-from pathlib import Path
 from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
-from llama_index.core.node_parser import TokenTextSplitter
-from llama_index.core.ingestion import IngestionPipeline
+from llama_index.core import Document
 
 class DocumentRetriever:
     """Document retrieval with LlamaIndex + Ollama."""
@@ -40,16 +38,6 @@ class DocumentRetriever:
         self.similarity_top_k = similarity_top_k
         self.index = None
 
-        # Setup chunker 
-        self.chunker = TokenTextSplitter(
-            chunk_size=128,
-            chunk_overlap=16
-        )
-
-        self.pipeline = IngestionPipeline(
-            transformations=[self.chunker]
-        )
-
     def build_index_from_directory(
         self, 
         input_dir: str,
@@ -57,7 +45,7 @@ class DocumentRetriever:
         recursive: bool = True
     ) -> None:
         """
-        Build index from a directory of documents with chunking.
+        Build index from a directory of documents.
 
         Args:
             input_dir: Path to directory containing documents.
@@ -65,23 +53,31 @@ class DocumentRetriever:
             recursive: Whether to search subdirectories.
         """
         if required_exts is None:
-            required_exts = [".txt"]
-
-        # Load raw docs 
+            required_exts = [".pdf", ".txt"]
+            
+        # Load documents from directory
         loader = SimpleDirectoryReader(
             input_dir=input_dir,
             required_exts=required_exts,
             recursive=recursive
         )
         docs = loader.load_data()
+        
+        # Create vector store index
+        self.index = VectorStoreIndex.from_documents(docs)
+        print(f"Indexed {len(docs)} documents from {input_dir}")
 
-        # Apply chunking
-        nodes = self.pipeline.run(documents=docs)
+    def build_index_from_texts(self, documents: List[str]) -> None:
+        """
+        Build index from a list of text strings.
 
-        # Build index
-        self.index = VectorStoreIndex(nodes)
-
-        print(f"Indexed {len(nodes)} chunks from directory: {input_dir}")
+        Args:
+            documents: List of text documents.
+        """
+        
+        docs = [Document(text=doc) for doc in documents]
+        self.index = VectorStoreIndex.from_documents(docs)
+        print(f"Indexed {len(docs)} text documents.")
 
     def query(self, question: str, streaming: bool = False) -> str:
         """
@@ -95,7 +91,7 @@ class DocumentRetriever:
             The generated answer.
         """
         if self.index is None:
-            raise ValueError("Index not yet built. Call build_index_from_directory() first.")
+            raise ValueError("Index not yet built. Call build_index_*() first.")
 
         # Setup query engine
         query_engine = self.index.as_query_engine(
@@ -113,21 +109,20 @@ class DocumentRetriever:
             return str(response)
 
 
-# Build index from data
+# Quick test
 if __name__ == "__main__":
     retriever = DocumentRetriever()
-
-    # Get data directory
-    data_dir = str(Path(__file__).parent.parent / "data")
-
-    # Build index with real chunking
-    retriever.build_index_from_directory(data_dir)
-
-    # Show index stats
-    nodes = retriever.index.docstore.docs
-    print(f"\nTotal chunks: {len(nodes)}\n")
-
-    for i, (node_id, node) in enumerate(nodes.items(), 1):
-        file_name = node.metadata.get("file_name", "Unknown")
-        print(f"Chunk #{i} (from {file_name})")
-        print(f"{node.text[:200]}...\n")
+    
+    # Test with text documents
+    docs = [
+        "Python is a high-level programming language.",
+        "Ebla Computer Consultancy is a technology solutions provider specializing in IT consulting",
+        "FastAPI is a modern web framework for building APIs."
+    ]
+    
+    retriever.build_index_from_texts(docs)
+    answer = retriever.query("What is Ebla?")
+    
+    print("Query answer:")
+    print(answer)
+    

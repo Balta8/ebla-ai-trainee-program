@@ -1,4 +1,5 @@
-### **Milestone 2: Understanding RAG & Core Technologies**
+# Milestone 2: Understanding RAG & Core Technologies
+
 **Goal:** Understand Retrieval-Augmented Generation (RAG) architecture and build a working RAG system with local LLM.
 
 #### Objectives:
@@ -10,16 +11,16 @@
 #### Deliverables:
 - [x] Discussion summary of RAG concepts
 - [x] **Python script demonstrating interaction with local LLM**
-  - `models/llm_model.py` - Run standalone to test LLM interaction
+  - `services/llm_service.py` - Run standalone to test LLM interaction
 - [x] **Simple index build demonstration**
-  - `models/retriever.py` - Run standalone to test document indexing
+  - `services/rag_service.py` - Run standalone to test document indexing
 - [x] LocalLLM class for Ollama integration
-  - `models/llm_model.py` - LLM wrapper for text generation
+  - `services/llm_service.py` - LLM wrapper for text generation
 - [x] DocumentRetriever class for indexing and retrieval
-  - `models/retriever.py` - Document indexing with LlamaIndex
+  - `services/rag_service.py` - Document indexing with LlamaIndex
 - [x] MVC Architecture Implementation
-  - `models/` - LLM and Retriever models
-  - `views/view.py` - Display/presentation layer
+  - `services/` - LLM and Retriever logic (Business Logic Layer)
+  - `views/cli_view.py` - Display/presentation layer
   - `controllers/rag_controller.py` - Coordinates RAG workflow
   - `main.py` - Main entry point for RAG system
 - [x] Sample data for testing
@@ -98,11 +99,11 @@ milestone2/
 ├── README.md                           # This file
 ├── requirements.txt                    # Python dependencies
 ├── main.py                            # Main entry point
-├── models/
-│   ├── llm_model.py                   # LocalLLM wrapper for Ollama
-│   └── retriever.py                   # DocumentRetriever with LlamaIndex
+├── services/
+│   ├── llm_service.py                 # LocalLLM wrapper for Ollama
+│   └── rag_service.py                 # DocumentRetriever with LlamaIndex
 ├── views/
-│   └── view.py                        # Display layer
+│   └── cli_view.py                    # Display layer
 ├── controllers/
 │   └── rag_controller.py              # RAG workflow coordinator
 ├── data/
@@ -112,8 +113,8 @@ milestone2/
 
 **How to run each file:**
 - `python3 main.py` → Full RAG system with interactive Q&A
-- `python3 models/llm_model.py` → Test LLM interaction only
-- `python3 models/retriever.py` → Test document indexing only
+- `python3 services/llm_service.py` → Test LLM interaction only
+- `python3 services/rag_service.py` → Test document indexing only
 
 ---
 
@@ -174,7 +175,7 @@ pip install -r requirements.txt
 #### **Step 5: Verify Setup**
 ```bash
 # Quick test - should print "Connected to Ollama..."
-python3 -c "from models.llm_model import LocalLLM; llm = LocalLLM(); llm.check_connection()"
+python3 -c "from services.llm_service import LocalLLM; llm = LocalLLM(); llm.check_connection()"
 ```
 
 ---
@@ -197,13 +198,13 @@ This will:
 
 **Test LLM interaction:**
 ```bash
-python3 models/llm_model.py
+python3 services/llm_service.py
 ```
 This demonstrates direct interaction with the local LLM (Ollama + Qwen2.5:7b).
 
 **Test index building:**
 ```bash
-python3 models/retriever.py
+python3 services/rag_service.py
 ```
 This demonstrates document indexing and chunking process.
 
@@ -228,10 +229,10 @@ Enter your question (or 'quit' to exit): quit
 Goodbye!
 ```
 
-### **LLM Interaction Demo (llm_model.py):**
+### **LLM Interaction Demo (llm_service.py):**
 
 ```bash
-$ python3 models/llm_model.py
+$ python3 services/llm_service.py
 Connected to Ollama with model: qwen2.5:7b
 Enter your prompt: Tell me a joke about programming
 
@@ -239,10 +240,10 @@ Response: Why do programmers prefer dark mode?
 Because light attracts bugs! 🐛
 ```
 
-### **Index Building Demo (retriever.py):**
+### **Index Building Demo (rag_service.py):**
 
 ```bash
-$ python3 models/retriever.py
+$ python3 services/rag_service.py
 Indexed 5 chunks from directory: /path/to/data
 
 Total chunks: 5
@@ -256,7 +257,7 @@ Content: Ebla Computer Consultancy is a technology solutions provider...
 
 ---
 
-## � Troubleshooting
+##  Troubleshooting
 
 ### **Ollama connection issues:**
 ```bash
@@ -287,7 +288,7 @@ ollama serve
 
 ---
 
-## 📚� Key Learnings
+## 📚 Key Learnings
 
 ### **RAG Architecture**
 - ✅ Understanding retriever-generator pipeline
@@ -310,4 +311,3 @@ ollama serve
 - ✅ Separating concerns (Model, View, Controller)
 - ✅ Modular and testable code
 - ✅ Clean code principles
-
