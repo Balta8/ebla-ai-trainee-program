@@ -81,9 +81,22 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ---
 
-### Milestone 4: Retrieval & LLM Integration
-**Status:** Started  
+### Milestone 4: Retrieval & LLM Integration ✅
+**Status:** Completed  
+**Branch:** `main`  
+**Folder:** [`milestones/milestone4/`](./milestones/milestone4/)
+
 **Goal:** Implement retrieval of relevant documents and integrate with local LLM.
+
+**Key Deliverables:**
+- ✅ LLM Integration (Ollama + Qwen2.5:7b)
+- ✅ RAG Pipeline (Retrieval + Generation)
+- ✅ Chat Endpoint (`POST /api/v1/chat`)
+- ✅ Context-aware responses with source attribution
+- ✅ Clean Architecture (Router -> Controller -> Service -> Utils)
+- ✅ Prompt Engineering
+
+[View Milestone 4 Details →](./milestones/milestone4/README.md)
 
 ---
 
@@ -129,8 +142,8 @@ ebla-ai-trainee-program/
     ├── milestone2/                   # ✅ Milestone 2: RAG System
     │   ├── README.md                 # Milestone 2 documentation
     │   ├── main.py                   # RAG system entry point
-    │   ├── models/                   # LLM & Retriever models
     │   ├── controllers/              # RAG Controller
+    │   ├── services/                 # Business Logic (RAG, Vector Store)
     │   ├── views/                    # Display layer
     │   ├── data/                     # Sample documents
     │   └── requirements.txt          # Milestone 2 dependencies
@@ -138,15 +151,24 @@ ebla-ai-trainee-program/
     │   ├── README.md                 # Milestone 3 documentation
     │   ├── app.py                    # FastAPI application
     │   ├── main.py                   # CLI tool
-    │   ├── models/                   # Document loader, text processor, vector store
     │   ├── controllers/              # Document controller
-    │   ├── views/                    # CLI & Base views
+    │   ├── services/                 # Document & Vector Store services
+    │   ├── models/                   # Pydantic schemas (API models)
     │   ├── routers/                  # API endpoints
-    │   ├── schemas/                  # Pydantic models
-    │   ├── utils/                    # Logging config
+    │   ├── views/                    # CLI & Base views
+    │   ├── utils/                    # Logging & Helpers
     │   ├── data/                     # EBLA documents
     │   └── requirements.txt          # Milestone 3 dependencies
-    ├── milestone4/                   # Milestone 4 (coming soon)
+    ├── milestone4/                   # ✅ Milestone 4: Retrieval & LLM
+    │   ├── README.md                 # Milestone 4 documentation
+    │   ├── app.py                    # FastAPI app
+    │   ├── routers/                  # Chat endpoints
+    │   ├── controllers/              # RAG orchestration
+    │   ├── services/                 # Business logic
+    │   ├── models/                   # Data models & Schemas
+    │   ├── utils/                    # Helper functions
+    │   ├── views/                    # Presentation layer
+    │   └── requirements.txt          # Dependencies
     └── ...
 ```
 
@@ -185,13 +207,13 @@ python3 main.py
 | 1. Python Fundamentals | ✅ Complete | `main` | `milestones/milestone1/` |
 | 2. RAG & Core Tech | ✅ Complete | `main` | `milestones/milestone2/` |
 | 3. Data & Indexing | ✅ Complete | `main` | `milestones/milestone3/` |
-| 4. Retrieval & LLM | ⏳ Started | `main` | `milestones/milestone4/` |
+| 4. Retrieval & LLM | ✅ Complete | `main` | `milestones/milestone4/` |
 | 5. Chat & Prompts | ⏳ Not Started | - | - |
 | 6. Final Demo | ⏳ Not Started | - | - |
 
 ---
 
-**Last Updated:** November 22, 2025
+**Last Updated:** November 23, 2025
 
 **Note:** This README is updated constantly as progress is made through each milestone.
 
