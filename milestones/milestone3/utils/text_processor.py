@@ -1,9 +1,8 @@
 """Text processing and chunking using LangChain."""
-import os
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from typing import List
-from models.document_loader import DocumentLoader
 
 
 class TextProcessor:
@@ -53,6 +52,12 @@ class TextProcessor:
         
 # Example usage
 if __name__ == "__main__":
+    import os
+    import sys
+    
+    # Add parent directory to path to allow importing utils
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from utils.document_loader import DocumentLoader
 
     # Define the data directory path
     data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
@@ -70,6 +75,7 @@ if __name__ == "__main__":
     print(f"Total documents loaded: {len(documents)}")
     print(f"Total chunks created: {len(chunks)}")
     for i, chunk in enumerate(chunks, 1):
-        print(f"{i}. {chunk.metadata['source'].split('/')[-1]} - Chunk {chunk.metadata['chunk_index']}")
+        source_name = chunk.metadata.get('source', 'Unknown').split('/')[-1]
+        print(f"{i}. {source_name} - Chunk {chunk.metadata.get('chunk_index', 0)}")
         print(f"   Length: {len(chunk.page_content)} chars")
         print(f"   Preview: {chunk.page_content[:100]}...\n")

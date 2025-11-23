@@ -1,113 +1,114 @@
 """Document controller for orchestrating document operations."""
 
-from models.document_loader import DocumentLoader
-from models.text_processor import TextProcessor
-from models.vector_store import VectorStoreManager
+from services.document_service import DocumentService
+from services.vector_store import VectorStoreManager
 from views.base_view import BaseView, SilentView
-from typing import List, Tuple, Dict, Any, Optional
-from langchain_core.documents import Document
+from models.api_schemas import IndexRequest, IndexResponse, SearchRequest, SearchResponse, DocumentResult
+from typing import Optional
+import os
+from utils.file_utils import resolve_path
 
 
 class DocumentController:
     """Controller for managing document indexing and search operations."""
     
-    def __init__(self, persist_directory: str = "./chroma_db", view: Optional[BaseView] = None):
+    def __init__(self, view: Optional[BaseView] = None):
         """
         Initialize the document controller.
         
         Args:
-            persist_directory: Directory for ChromaDB persistence
-            view: Optional view instance for displaying output. 
-                  If None, a SilentView is used (for API context).
+            view: Optional view instance. If None, SilentView is used (for API context).
         """
-        self.vector_store_manager = VectorStoreManager(persist_directory)
-        # Use the provided view, or fall back to SilentView
+        self.vector_store_manager = VectorStoreManager()
+        self.service = DocumentService(self.vector_store_manager)
         self.view = view if view else SilentView()
     
-    def index_documents(
-        self,
-        documents_path: str,
-        collection_name: str = "documents",
-        chunk_size: int = 500,
-        chunk_overlap: int = 50
-    ) -> Dict[str, Any]:
+    def index_documents(self, request: IndexRequest) -> IndexResponse:
         """
         Index documents from a directory.
         
         Args:
-            documents_path: Path to documents directory
-            collection_name: Name for the ChromaDB collection
-            chunk_size: Size of text chunks
-            chunk_overlap: Overlap between chunks
+            request: IndexRequest model
             
         Returns:
-            Dictionary with indexing statistics
+            IndexResponse model
         """
         try:
             self.view.show_info("Starting document indexing...")
             
-            # Load documents
+            # Resolve and validate path
+            resolved_path = resolve_path(request.documents_path)
+            if not os.path.exists(resolved_path):
+                error_msg = f"Documents path not found: {resolved_path}"
+                self.view.show_error(error_msg)
+                raise FileNotFoundError(error_msg)
+            
             self.view.show_message("Loading documents...")
-            loader = DocumentLoader(documents_path)
-            documents = loader.load_documents()
-            self.view.show_success(f"Loaded {len(documents)} documents")
             
-            # Process documents
-            self.view.show_message("Splitting documents into chunks...")
-            processor = TextProcessor(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-            chunks = processor.process_documents(documents)
-            self.view.show_success(f"Created {len(chunks)} chunks")
+            # Call service
+            result = self.service.index_documents(
+                documents_path=resolved_path,
+                collection_name=request.collection_name,
+                chunk_size=request.chunk_size,
+                chunk_overlap=request.chunk_overlap
+            )
             
-            # Create vector store
-            self.view.show_message("Generating embeddings and creating vector store...")
-            vector_store = self.vector_store_manager.create(chunks, collection_name)
-            self.view.show_success(f"Vector store created with collection '{collection_name}'")
+            self.view.show_success(f"Indexed {result['documents_indexed']} documents")
+            self.view.display_indexing_stats(
+                result["documents_indexed"],
+                result["chunks_created"],
+                result["collection_name"]
+            )
             
-            # Display statistics
-            self.view.display_indexing_stats(len(documents), len(chunks), collection_name)
-            
-            return {
-                "status": "success",
-                "documents_indexed": len(documents),
-                "chunks_created": len(chunks),
-                "collection_name": collection_name
-            }
+            return IndexResponse(
+                status="success",
+                message="Documents indexed successfully",
+                documents_indexed=result["documents_indexed"],
+                chunks_created=result["chunks_created"],
+                collection_name=result["collection_name"]
+            )
             
         except Exception as e:
             self.view.show_error(f"Indexing failed: {str(e)}")
             raise
     
-    def search_documents(
-        self,
-        query: str,
-        collection_name: str = "documents",
-        top_k: int = 3
-    ) -> List[Tuple[Document, float]]:
+    def search_documents(self, request: SearchRequest) -> SearchResponse:
         """
         Search for documents similar to the query.
         
         Args:
-            query: Search query text
-            collection_name: Name of the ChromaDB collection
-            top_k: Number of results to return
+            request: SearchRequest model
             
         Returns:
-            List of tuples (Document, similarity_score)
+            SearchResponse model
         """
         try:
-            self.view.show_info(f"Searching for: '{query}'")
+            self.view.show_info(f"Searching for: '{request.query}'")
             
-            # Load vector store
-            vector_store = self.vector_store_manager.load(collection_name)
+            # Call service
+            results = self.service.search_documents(
+                query=request.query,
+                collection_name=request.collection_name,
+                top_k=request.top_k
+            )
             
-            # Perform search
-            results = self.vector_store_manager.search(vector_store, query, k=top_k)
+            self.view.show_success(f"Found {len(results)} results")
             
-            # Display results
-            self.view.display_search_results(results, query)
+            # Convert to Pydantic models
+            document_results = [
+                DocumentResult(**doc_dict)
+                for doc_dict in results
+            ]
             
-            return results
+            return SearchResponse(
+                status="success",
+                query=request.query,
+                results=document_results,
+                total_results=len(document_results)
+            )
             
         except Exception as e:
             self.view.show_error(f"Search failed: {str(e)}")
             raise
+    
+

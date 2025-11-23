@@ -13,58 +13,40 @@ This milestone successfully implements the following requirements:
 - [x] **Build a FastAPI service with endpoints**:
   - `POST /api/v1/index`: Preprocesses and indexes documents.
   - `POST /api/v1/search`: Accepts a query and returns relevant documents.
-- [x] **Documentation**: Comprehensive README and Swagger UI (`/docs`) explaining endpoints and usage.
-
-## 🎓 Key Learnings
-
-### 1. FastAPI Routers (`APIRouter`)
-- Learned how to structure a large API by splitting endpoints into separate files (`routers/index.py`, `routers/search.py`).
-- Used `APIRouter` to modularize the application, making the main `app.py` clean and maintainable.
-- Applied prefixes and tags to group related endpoints automatically in Swagger UI.
-
-### 2. Pydantic Schemas (`BaseModel`)
-- Moved away from unstructured dictionaries to strict data validation using **Pydantic**.
-- Created dedicated schemas (`IndexRequest`, `SearchResponse`, etc.) in `schemas/api_schemas.py`.
-- This ensures type safety, automatic validation, and generates accurate API documentation.
-
-### 3. Advanced Logging
-- Replaced basic `print()` statements with a professional **Logging** system (`logging` module).
-- Configured different log levels (`INFO`, `ERROR`) and output destinations (Console & File).
-- Learned how to track application flow and debug errors effectively in a production-like environment.
-
-### 4. MVC Architecture with Dependency Injection
-- Successfully adapted the **Model-View-Controller** pattern for a Web API.
-- The **Controller** handles logic, **Routers** handle HTTP requests (View layer for API), and **Models** handle data.
-- Implemented **Dependency Injection**: The Controller receives a `View` from outside, making it flexible and testable.
-- Used **Null Object Pattern** (`SilentView`) to avoid conditional logic when no output is needed (API context).
+- [x] **Clean Architecture**: Refactored to separate concerns (Router, Controller, Service, Utils).
 
 ## 📁 Project Structure
 
 ```
 milestone3/
 ├── app.py                    # FastAPI application entry point
-├── main.py                   # CLI application entry point
+├── main.py                   # CLI entry point (optional)
 ├── requirements.txt          # Project dependencies
-├── data/                     # Document dataset (PDFs & TXTs)
-├── logs/                     # Application logs (auto-generated)
-├── chroma_db/                # Vector database storage (auto-generated)
-├── controllers/
-│   └── document_controller.py # logic orchestration
-├── models/
-│   ├── document_loader.py    # Document loading (PDF/TXT)
-│   ├── text_processor.py     # Text chunking 
-│   └── vector_store.py       # ChromaDB management
-├── routers/
+├── .gitignore                # Git ignore rules
+├── venv/                     # Virtual environment (isolated)
+├── routers/                  # HTTP Route Handlers (Thin Layer)
 │   ├── index.py              # Indexing endpoint 
 │   └── search.py             # Search endpoint 
-├── schemas/
-│   └── api_schemas.py        # Pydantic request/response models
-├── utils/
+├── controllers/              # Orchestration Layer
+│   └── document_controller.py # Coordinates indexing and search
+├── services/                 # Business Logic Layer
+│   ├── document_service.py   # Business logic for document ops
+│   └── vector_store.py       # Vector Store operations (Stateful)
+├── utils/                    # Helper Functions (Stateless)
+│   ├── document_loader.py    # Document loading (PDF/TXT)
+│   ├── text_processor.py     # Text chunking
+│   ├── file_utils.py         # Path resolution utilities
 │   └── logging_config.py     # Logging configuration
-└── views/
-    ├── base_view.py          # Abstract base class & SilentView
-    └── cli_view.py           # CLI presentation layer
+├── models/                   # Data Models
+│   └── api_schemas.py        # Pydantic request/response models
+├── views/                    # Presentation Layer
+│   ├── base_view.py          # Abstract base class
+│   └── cli_view.py           # CLI presentation layer
+├── data/                     # Document dataset (PDFs & TXTs)
+├── chroma_db/                # ChromaDB persistent storage
+└── logs/                     # Application logs
 ```
+
 ## 🔍 How It Works
 
 1. **Document Loading**:
@@ -74,12 +56,10 @@ milestone3/
 2. **Text Processing**:
    - Split documents into chunks (500 chars, 50 overlap)
    - Preserve context with overlapping text
-   - Add chunk indices to metadata
 
 3. **Vector Store Creation**:
-   - Generate embeddings using HuggingFace model
+   - Generate embeddings using HuggingFace model (`sentence-transformers/all-MiniLM-L6-v2`)
    - Store in ChromaDB with automatic persistence
-   - Support multiple collections
 
 4. **Semantic Search**:
    - Convert query to embedding
@@ -88,41 +68,50 @@ milestone3/
 
 ## � Installation & Setup
 
-1. **Activate Virtual Environment**:
-   ```bash
-   # Assuming you are in the project root
-   source venv/bin/activate
-   ```
-
-2. **Install Dependencies**:
-   ```bash
-   pip install -r milestones/milestone3/requirements.txt
-   ```
-
-## 🔧 Usage
-
-### Option 1: REST API (Recommended)
-
-Start the server from the `milestone3` directory:
+### 1. Create Virtual Environment
 
 ```bash
 cd milestones/milestone3
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 2. Install Dependencies
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+**Note**: This project uses:
+- **ChromaDB 1.3.5+** (compatible with NumPy 2.0+)
+- **Python 3.13** compatible packages
+- **LangChain 0.3+** with latest community packages
+
+### 3. Verify Installation
+
+```bash
+python -c "import chromadb; import langchain; print('✅ All dependencies installed successfully!')"
+```
+
+## 🔧 Usage
+
+### Option 1: Run API Server
+
+```bash
+# Make sure you're in the milestone3 directory with venv activated
+source venv/bin/activate
 uvicorn app:app --reload --host 0.0.0.0 --port 8000
 ```
 
 - **Swagger UI**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **ReDoc**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
-### Option 2: CLI Tool
-
-Run the interactive command-line interface:
+### Option 2: Run CLI (Optional)
 
 ```bash
-python milestones/milestone3/main.py
+python main.py
 ```
-Follow the menu:
-- **1**: Index documents from a directory
-- **2**: Search for relevant documents
-- **3**: Exit
 
 ## 📡 API Endpoints
 
@@ -152,6 +141,18 @@ Indexes documents from the specified directory.
 }
 ```
 
+**cURL Example**:
+```bash
+curl -X POST "http://localhost:8000/api/v1/index" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "documents_path": "data",
+    "collection_name": "documents",
+    "chunk_size": 500,
+    "chunk_overlap": 50
+  }'
+```
+
 ### 2. Search Documents
 **POST** `/api/v1/search`
 
@@ -178,22 +179,124 @@ Performs semantic search on indexed documents.
         "source": "data/ebla_services.txt",
         "chunk_index": 4
       },
-      "score": 1.69
+      "score": 0.45
+    },
+    {
+      "content": "Professional Services: Ebla's professional services ensure end-to-end solutions...",
+      "metadata": {
+        "source": "data/ebla_services.txt",
+        "chunk_index": 5
+      },
+      "score": 0.52
     }
   ],
-  "total_results": 1
+  "total_results": 2
 }
+```
+
+**cURL Example**:
+```bash
+curl -X POST "http://localhost:8000/api/v1/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What services does EBLA provide?",
+    "collection_name": "documents",
+    "top_k": 3
+  }'
 ```
 
 ## 🏗️ Architecture & Tech Stack
 
-- **FastAPI**: High-performance web framework for building APIs.
-- **LangChain**: Framework for developing applications powered by language models.
-- **ChromaDB**: AI-native open-source embedding database.
-- **HuggingFace**: Used for `sentence-transformers/all-MiniLM-L6-v2` embeddings.
-- **Pydantic**: Data validation using Python type hints.
-- **Uvicorn**: ASGI web server implementation.
+### Technologies
+- **FastAPI**: High-performance web framework for building APIs
+- **LangChain 0.3+**: Framework for developing applications powered by language models
+- **ChromaDB 1.3.5+**: AI-native open-source embedding database
+- **HuggingFace**: Used for `sentence-transformers/all-MiniLM-L6-v2` embeddings
+- **Pydantic 2.5+**: Data validation using Python type hints
+- **Uvicorn**: ASGI server for production deployment
 
+### Architecture Pattern
+This project follows **Clean Architecture** principles:
 
+```
+┌─────────────┐
+│   Routers   │  ← HTTP Layer (FastAPI routes)
+└──────┬──────┘
+       │
+┌──────▼──────┐
+│ Controllers │  ← Orchestration Layer
+└──────┬──────┘
+       │
+┌──────▼──────┐
+│  Services   │  ← Business Logic Layer
+└──────┬──────┘
+       │
+┌──────▼──────┐
+│    Utils    │  ← Helper Functions (Stateless)
+└─────────────┘
+```
 
+**Benefits**:
+- ✅ **Separation of Concerns**: Each layer has a single responsibility
+- ✅ **Testability**: Easy to unit test each layer independently
+- ✅ **Maintainability**: Changes in one layer don't affect others
+- ✅ **Reusability**: Services and utils can be reused across different controllers
+
+## 🔧 Configuration
+
+### Environment Variables (Optional)
+Create a `.env` file for custom configuration:
+
+```env
+CHROMA_DB_PATH=./chroma_db
+LOG_LEVEL=INFO
+EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+```
+
+### Customization
+- **Chunk Size**: Adjust in the index request (default: 500)
+- **Chunk Overlap**: Adjust in the index request (default: 50)
+- **Embedding Model**: Change in `services/vector_store.py`
+- **Collection Name**: Specify different collections for different datasets
+
+## 📝 Logging
+
+Logs are automatically saved to `logs/app_YYYYMMDD_HHMMSS.log` with the following format:
+```
+2025-11-23 07:35:07 - root - INFO - Application startup complete
+```
+
+## 🐛 Troubleshooting
+
+### Issue: `ModuleNotFoundError: No module named 'langchain_huggingface'`
+**Solution**: Make sure you're using the virtual environment:
+```bash
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Issue: `AttributeError: np.float_ was removed in NumPy 2.0`
+**Solution**: This is fixed in ChromaDB 1.3.5+. Update your dependencies:
+```bash
+pip install -U chromadb
+```
+
+### Issue: Port 8000 already in use
+**Solution**: Kill the existing process or use a different port:
+```bash
+lsof -i :8000  # Find the process
+kill -9 <PID>  # Kill it
+# Or use a different port:
+uvicorn app:app --reload --port 8001
+```
+
+## 📚 Next Steps
+
+This milestone provides the foundation for:
+- **Milestone 4**: RAG (Retrieval-Augmented Generation) with LLM integration
+- **Milestone 5**: Advanced features (re-ranking, hybrid search, etc.)
+
+## 📄 License
+
+Part of the EBLA AI Trainee Program.
 

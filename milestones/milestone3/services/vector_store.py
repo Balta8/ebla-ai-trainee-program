@@ -1,7 +1,5 @@
 """ChromaDB vector store manager."""
 
-from models.document_loader import DocumentLoader
-from models.text_processor import TextProcessor
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
@@ -48,6 +46,11 @@ class VectorStoreManager:
 
 # Example usage
 if __name__ == "__main__":
+    # Add parent directory to path to allow importing utils
+    import sys
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from utils.document_loader import DocumentLoader
+    from utils.text_processor import TextProcessor
 
     # Define the data directory path
     data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
@@ -62,11 +65,12 @@ if __name__ == "__main__":
     chunks = processor.process_documents(documents)
 
     # Create or load vector store
-    vector_store_manager = VectorStoreManager(persist_directory="./chroma_db")
-    #vector_store = vector_store_manager.create(chunks, collection_name="documents")
-
-    # Alternatively, to load an existing store:
-    vector_store = vector_store_manager.load(collection_name="documents")
+    persist_dir = os.path.join(os.path.dirname(__file__), "..", "chroma_db")
+    vector_store_manager = VectorStoreManager(persist_directory=persist_dir)
+    
+    # Create and populate the vector store 
+    print("Indexing documents...")
+    vector_store = vector_store_manager.create(chunks, collection_name="documents")
 
     # Example search
     query = "what is Retrieval-Augmented Generation?"
@@ -74,5 +78,6 @@ if __name__ == "__main__":
 
     print(f"Search results for query: '{query}'")
     for doc, score in results:
-        print(f"Score: {score:.4f}, Document Source: {doc.metadata['source']}")
+        source_name = doc.metadata.get('source', 'Unknown').split('/')[-1]
+        print(f"Score: {score:.4f}, Document Source: {source_name}")
         print(f"   Preview: {doc.page_content[:100]}...\n")
