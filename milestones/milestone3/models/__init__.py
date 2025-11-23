@@ -1,1 +1,1 @@
-"""Models for document operations."""   
+"""Data models and API schemas."""   
