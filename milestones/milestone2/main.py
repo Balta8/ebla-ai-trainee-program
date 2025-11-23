@@ -1,8 +1,8 @@
 """Main entry point for the retrieval‑augmented generation system."""
 import os
 from pathlib import Path
-from models.retriever import DocumentRetriever
-from views.view import View
+from services.rag_service import DocumentRetriever
+from views.cli_view import View
 from controllers.rag_controller import RAGController
 
 def load_documents(file_paths: list[str]) -> list[str]:

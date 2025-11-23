@@ -1,5 +1,5 @@
-llama-index
-llama-index-core
-llama-index-embeddings-huggingface
-llama-index-llms-ollama
-ollama
+llama-index>=0.10.0
+llama-index-core>=0.10.0
+llama-index-embeddings-huggingface>=0.1.0
+llama-index-llms-ollama>=0.1.0
+ollama>=0.1.0
