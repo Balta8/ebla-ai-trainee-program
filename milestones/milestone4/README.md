@@ -17,7 +17,7 @@ Integrate the document retrieval system (Milestone 3) with a local LLM (Mileston
 - [x] **Prompt Engineering**: Design effective prompts for accurate responses
 - [x] **Context Management**: Pass retrieved documents to LLM as context
 - [x] **Source Attribution**: Return source documents with the answer
-- [x] **Clean Architecture**: Implemented Router → Controller → Service → Utils pattern
+- [x] **Clean Architecture**: Implemented Router → Service → Utils pattern
 
 ## 📁 Project Structure
 
@@ -25,13 +25,11 @@ Integrate the document retrieval system (Milestone 3) with a local LLM (Mileston
 milestone4/
 ├── app.py                    # FastAPI application entry point
 ├── requirements.txt          # Dependencies
-├── routers/                  # HTTP Route Handlers (Thin Layer)
+├── routers/                  # HTTP Route Handlers
 │   └── chat.py               # Chat endpoint definition
-├── controllers/              # Orchestration Layer
-│   └── rag_controller.py     # Coordinates Retrieval & Generation
 ├── services/                 # Business Logic Layer
-│   ├── rag_service.py        # RAG logic (Prompting, Formatting)
-│   └── vector_store.py       # Vector Store operations (Stateful)
+│   ├── rag_service.py        # Complete RAG workflow (Retrieval + Generation)
+│   └── vector_store.py       # Vector Store operations
 ├── utils/                    # Helper Functions (Stateless)
 │   ├── llm_service.py        # Ollama LLM wrapper
 │   ├── document_loader.py    # Document loading utilities
@@ -47,12 +45,13 @@ milestone4/
 ## 🔄 How It Works
 
 1. **User sends a query** via `/api/v1/chat`
-2. **Router** receives request and passes it to **Controller**
-3. **Controller** uses **VectorStore Service** to retrieve top-k relevant documents
-4. **Controller** passes documents + query to **RAG Service**
-5. **RAG Service** constructs a prompt and calls **LLM Utility**
-6. **LLM generates** an answer based on the context
-7. **System returns** the answer + source documents
+2. **Router** receives request and passes it to **RAG Service**
+3. **RAG Service** performs complete workflow:
+   - Retrieves top-k relevant documents from vector store
+   - Constructs prompt with context
+   - Calls LLM to generate answer
+   - Formats response with sources
+4. **System returns** the answer + source documents
 
 ## 🛠️ Tech Stack
 
@@ -192,23 +191,13 @@ This project follows **Clean Architecture** principles:
 └──────┬──────┘
        │
 ┌──────▼──────┐
-│ Controllers │  ← Orchestration Layer
-└──────┬──────┘
-       │
-┌──────▼──────┐
-│  Services   │  ← Business Logic Layer (RAG, VectorStore)
+│  Services   │  ← Business Logic Layer (Complete RAG workflow)
 └──────┬──────┘
        │
 ┌──────▼──────┐
 │    Utils    │  ← Helper Functions (LLM, Loaders)
 └─────────────┘
 ```
-
-**Benefits**:
-- ✅ **Separation of Concerns**: Each layer has a single responsibility
-- ✅ **Testability**: Easy to unit test each layer independently
-- ✅ **Maintainability**: Changes in one layer don't affect others
-- ✅ **Reusability**: Services and utils can be reused across different controllers
 
 ## 🎓 Learning Objectives
 
