@@ -1,6 +1,6 @@
 """Pydantic schemas for API request/response validation."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field,ConfigDict
 from typing import List, Dict, Any
 
 
@@ -10,7 +10,7 @@ class ChatRequest(BaseModel):
     collection_name: str = Field(default="documents", description="ChromaDB collection name")
     top_k: int = Field(default=3, ge=1, le=10, description="Number of context documents to retrieve")
     
-    class Config:
+    model_config = ConfigDict(
         json_schema_extra = {
             "example": {
                 "query": "What services does EBLA provide?",
@@ -18,14 +18,23 @@ class ChatRequest(BaseModel):
                 "top_k": 3
             }
         }
-
+    )
 
 class SourceDocument(BaseModel):
     """Source document model."""
     content: str = Field(..., description="Document content")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Document metadata")
     score: float = Field(..., description="Similarity score")
-
+    
+    model_config = ConfigDict(
+        json_schema_extra = {
+            "example": {
+                "content": "EBLA supports the following infrastructure services...",
+                "metadata": {"source": "data/ebla_services.txt"},
+                "score": 1.69
+            }
+        }
+    )
 
 class ChatResponse(BaseModel):
     """Response model for chat endpoint."""
@@ -34,7 +43,7 @@ class ChatResponse(BaseModel):
     answer: str = Field(..., description="Generated answer")
     sources: List[SourceDocument] = Field(..., description="Source documents used for context")
     
-    class Config:
+    model_config = ConfigDict(
         json_schema_extra = {
             "example": {
                 "status": "success",
@@ -49,3 +58,4 @@ class ChatResponse(BaseModel):
                 ]
             }
         }
+    )

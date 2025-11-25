@@ -1,7 +1,8 @@
-"""RAG service for business logic."""
+"""RAG service for complete RAG workflow."""
 
 from services.vector_store import VectorStoreManager
 from utils.llm_service import LLMModel
+from models.api_schemas import ChatRequest, ChatResponse, SourceDocument
 from typing import Dict, Any, List
 import logging
 
@@ -9,71 +10,99 @@ logger = logging.getLogger(__name__)
 
 
 class RAGService:
-    """Service layer for RAG operations."""
+    """Service layer for complete RAG operations (Retrieval + Generation)."""
     
-    def __init__(self, vector_store_manager: VectorStoreManager, llm_model: LLMModel):
-        """
-        Initialize the service.
-        
-        Args:
-            vector_store_manager: VectorStoreManager instance
-            llm_model: LLMModel instance
-        """
-        self.vector_store_manager = vector_store_manager
-        self.llm_model = llm_model
-    
-    def answer_question(
+    def __init__(
         self,
-        query: str,
-        collection_name: str,
-        top_k: int,
-        context_text: str
-    ) -> Dict[str, Any]:
+        persist_directory: str = "./chroma_db",
+        llm_model_name: str = "qwen2.5:7b"
+    ):
         """
-        Generate answer and format results.
+        Initialize the RAG service with vector store and LLM.
         
         Args:
-            query: User's question
-            collection_name: ChromaDB collection name
-            top_k: Number of documents to retrieve
-            context_text: Retrieved context
+            persist_directory: Directory for ChromaDB persistence
+            llm_model_name: Name of the Ollama model
+        """
+        self.vector_store_manager = VectorStoreManager(persist_directory)
+        self.llm_model = LLMModel(model_name=llm_model_name)
+        logger.info(f"RAG Service initialized with model: {llm_model_name}")
+    
+    def process_query(self, request: ChatRequest) -> ChatResponse:
+        """
+        Complete RAG workflow: Retrieve → Generate → Format.
+        
+        Args:
+            request: ChatRequest with query and parameters
             
         Returns:
-            Dictionary with formatted answer and sources
+            ChatResponse with answer and sources
         """
-        # Build prompt
-        prompt = self._build_rag_prompt(query, context_text)
-        
-        # Generate answer
-        answer = self.llm_model.generate(prompt)
-        
-        return {
-            "query": query,
-            "answer": answer
-        }
+        try:
+            logger.info(f"Processing query: '{request.query}'")
+            
+            # 1. Retrieve relevant documents
+            vector_store = self.vector_store_manager.load(request.collection_name)
+            results = self.vector_store_manager.search(
+                vector_store, 
+                request.query, 
+                k=request.top_k
+            )
+            
+            # Handle no results case
+            if not results:
+                logger.warning("No relevant documents found")
+                return ChatResponse(
+                    status="success",
+                    query=request.query,
+                    answer="I couldn't find any relevant information to answer your question.",
+                    sources=[]
+                )
+            
+            # 2. Prepare context from retrieved documents
+            context_text = "\n\n".join([doc.page_content for doc, _ in results])
+            
+            # 3. Build prompt and generate answer
+            prompt = self._build_rag_prompt(request.query, context_text)
+            answer = self.llm_model.generate(prompt)
+            
+            # 4. Format sources
+            sources = self._format_sources(results)
+            
+            logger.info("Query processed successfully")
+            return ChatResponse(
+                status="success",
+                query=request.query,
+                answer=answer,
+                sources=sources
+            )
+            
+        except Exception as e:
+            logger.error(f"RAG process failed: {str(e)}", exc_info=True)
+            raise
     
-    def format_search_results(self, results: List[tuple]) -> List[Dict[str, Any]]:
+    def _format_sources(self, results: List[tuple]) -> List[SourceDocument]:
         """
-        Format search results for API response.
+        Format search results as SourceDocument models.
         
         Args:
             results: List of (Document, score) tuples
             
         Returns:
-            List of formatted result dictionaries
+            List of SourceDocument models
         """
         return [
-            {
-                "content": doc.page_content,
-                "metadata": doc.metadata,
-                "score": float(score)
-            }
+            SourceDocument(
+                content=doc.page_content,
+                metadata=doc.metadata,
+                score=float(score)
+            )
             for doc, score in results
         ]
     
     def _build_rag_prompt(self, query: str, context: str) -> str:
         """
-        Build a RAG prompt with query and context.
+        Build a RAG prompt with system instructions, context, and query.
         
         Args:
             query: User's question

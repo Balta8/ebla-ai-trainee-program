@@ -69,7 +69,7 @@ if __name__ == "__main__":
     
     # Create and populate the vector store 
     print("Indexing documents...")
-    vector_store = vector_store_manager.create(chunks, collection_name="documents")
+    vector_store = vector_store_manager.load(collection_name="documents")
 
     # Example search
     query = "what is Retrieval-Augmented Generation?"
