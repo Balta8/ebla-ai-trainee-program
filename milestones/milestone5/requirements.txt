@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-dotenv
+chromadb>=0.4.22
+langchain>=0.1.0
+langchain-community
+langchain-core
+langchain-huggingface
+ollama
+pydantic>=2.0.0
+sentence-transformers
+sqlalchemy
+psycopg2-binary
+pyodbc
