@@ -100,15 +100,40 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ---
 
-### Milestone 5: Chat History, Prompt Engineering & Contextual RAG
-**Status:** ⏳ Not Started  
+### Milestone 5: Chat History, Prompt Engineering & Contextual RAG ✅
+**Status:** Completed  
+**Branch:** `milestone5`  
+**Folder:** [`milestones/milestone5/`](./milestones/milestone5/)
+
 **Goal:** Implement chat history storage and prompt engineering techniques.
+
+**Key Deliverables:**
+- ✅ SQL Server database with 4 tables (Users, Sessions, Messages, Summaries)
+- ✅ FastAPI endpoints: `/api/v1/chat`, `/api/v1/history/{session_id}`
+- ✅ Context-aware RAG with chat history
+- ✅ Advanced prompt engineering (System + History + Context + Query)
+- ✅ Automatic conversation summarization
+- ✅ Clean Architecture (4 layers)
+- ✅ Comprehensive test suite
+
+[View Milestone 5 Details →](./milestones/milestone5/README.md)
 
 ---
 
-### Milestone 6: System Optimization & Final Demo
-**Status:** ⏳ Not Started  
-**Goal:** Optimize the system for performance and prepare final presentation.
+### Milestone 6: Streamlit UI for Chat RAG ✅
+**Status:** Completed  
+**Branch:** `milestone6`  
+**Folder:** [`milestones/milestone6/`](./milestones/milestone6/)
+
+**Goal:** Add a user-friendly chat interface for the RAG system.
+
+**Key Deliverables:**
+- ✅ Streamlit chat UI with side-by-side layout
+- ✅ Real-time chat with session persistence
+- ✅ Display of retrieved documents alongside responses
+- ✅ Session ID tracking
+
+[View Milestone 6 Details →](./milestones/milestone6/README.md)
 
 ---
 
@@ -116,11 +141,12 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 - **Language:** Python 3.13+
 - **Framework:** FastAPI (Milestone 3+)
+- **UI:** Streamlit (Milestone 6)
 - **LLM:** Ollama (Qwen2.5:7b) - Local, offline
 - **Indexing:** LlamaIndex, LangChain
 - **Embeddings:** HuggingFace (BAAI/bge-large-en-v1.5, sentence-transformers/all-MiniLM-L6-v2)
 - **Vector Store:** In-memory, ChromaDB (persistent storage)
-- **Database:** TBD (SQLite / PostgreSQL)
+- **Database:** SQL Server (Milestone 5+)
 
 ---
 
@@ -169,7 +195,26 @@ ebla-ai-trainee-program/
     │   ├── utils/                    # Helper functions
     │   ├── views/                    # Presentation layer
     │   └── requirements.txt          # Dependencies
-    └── ...
+    ├── milestone5/                   # ✅ Milestone 5: Chat History & Context
+    │   ├── README.md                 # Milestone 5 documentation
+    │   ├── app.py                    # FastAPI application
+    │   ├── config.py                 # Settings
+    │   ├── requirements.txt          # Dependencies
+    │   ├── .env                      # Environment variables
+    │   ├── repositories/             # Data Access Layer
+    │   ├── models/                   # SQLAlchemy ORM
+    │   ├── schemas/                  # Pydantic schemas
+    │   ├── services/                 # Business Logic
+    │   ├── routers/                  # API endpoints
+    │   ├── utils/                    # Helpers
+    │   ├── test/                     # Test suite
+    │   ├── data/                     # Source documents
+    │   └── docs/                     # Documentation
+    └── milestone6/                   # ✅ Milestone 6: Streamlit UI
+        ├── README.md                 # Milestone 6 documentation
+        ├── streamlit_app.py          # Streamlit chat UI
+        ├── requirements.txt          # Dependencies
+        └── docs/                     # Screenshots
 ```
 
 ---
@@ -208,12 +253,12 @@ python3 main.py
 | 2. RAG & Core Tech | ✅ Complete | `main` | `milestones/milestone2/` |
 | 3. Data & Indexing | ✅ Complete | `main` | `milestones/milestone3/` |
 | 4. Retrieval & LLM | ✅ Complete | `main` | `milestones/milestone4/` |
-| 5. Chat & Prompts | ⏳ Not Started | - | - |
-| 6. Final Demo | ⏳ Not Started | - | - |
+| 5. Chat & Prompts | ✅ Complete | `milestone5` | `milestones/milestone5/` |
+| 6. Streamlit UI | ✅ Complete | `milestone6` | `milestones/milestone6/` |
 
 ---
 
-**Last Updated:** November 23, 2025
+**Last Updated:** November 28, 2025
 
 **Note:** This README is updated constantly as progress is made through each milestone.
 
