@@ -17,3 +17,4 @@ sentence-transformers==5.1.2
 sqlalchemy==2.0.44
 psycopg2-binary==2.9.11
 pyodbc==5.3.0
+streamlit==1.40.0
