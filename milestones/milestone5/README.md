@@ -452,7 +452,6 @@ curl -X POST "http://localhost:8002/api/v1/chat" \
   -H "Content-Type: application/json" \
   -d '{
     "query": "What services does EBLA provide?",
-    "user_id": "user-123",
     "collection_name": "documents",
     "top_k": 3
   }'
@@ -496,7 +495,6 @@ curl -X POST "http://localhost:8002/api/v1/chat" \
   -H "Content-Type: application/json" \
   -d '{
     "query": "Tell me more about their cloud services",
-    "user_id": "user-123",
     "session_id": "550e8400-e29b-41d4-a716-446655440000",
     "top_k": 3
   }'
@@ -514,7 +512,6 @@ curl -X GET "http://localhost:8002/api/v1/history/550e8400-e29b-41d4-a716-446655
 ```json
 {
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
-  "user_id": "user-123",
   "created_at": "2025-11-28T09:00:00",
   "messages": [
     {
