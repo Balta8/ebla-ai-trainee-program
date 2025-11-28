@@ -1,6 +1,21 @@
-# Milestone 5: Chat History, Prompt Engineering & Context-Aware RAG
+# Milestone 6: Streamlit UI for Milestone 5 RAG System
 
-A complete **Context-Aware RAG System** with persistent chat history, advanced **Prompt Engineering**, **Conversation Summarization**, and **ChromaDB** vector search.
+This is **the same project as Milestone 5** (Context-Aware RAG System) with an added **Streamlit chat UI** that shows:
+- Chat messages (user & assistant)
+- Current session info
+- Retrieved documents side by side
+
+---
+
+## �️ UI Screenshot
+
+![Streamlit Chat UI](docs/Ui_chat.jpeg)
+
+*The Streamlit interface shows the chat on the left and retrieved documents on the right, with the session ID displayed under each assistant response.*
+
+---
+
+All backend logic, database, and API endpoints remain identical to Milestone 5.
 
 ---
 
@@ -103,7 +118,7 @@ Stores conversation summaries for long chats.
 ## 📁 Project Structure (Clean Architecture)
 
 ```
-milestone5/
+milestone6/
 ├── app.py                           # FastAPI application entry point
 ├── config.py                        # Configuration management 
 ├── requirements.txt                 # Python dependencies
@@ -436,9 +451,27 @@ uvicorn app:app --reload --host 0.0.0.0 --port 8002
 - **ReDoc**: http://localhost:8002/redoc
 - **Health Check**: http://localhost:8002/health
 
+### Start the Streamlit Chat UI
+
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Run Streamlit app
+streamlit run streamlit_app.py
+```
+
+**Access Points:**
+- **Chat UI**: http://localhost:8501
+
+The UI shows:
+- Left column: chat history with user/assistant messages
+- Right column: retrieved documents for the latest answer
+- Session ID shown under each assistant reply
+
 ---
 
-## 📡 API Examples
+## �📡 API Examples
 
 ### 1. Start a New Conversation
 
@@ -674,4 +707,4 @@ rm -rf chroma_db/
 **Status:** ✅ **Completed**  
 **Last Updated:** November 28, 2025  
 **Author:** Ahmed Balta  
-**Project:** EBLA AI Trainee Program - Milestone 5
+**Project:** EBLA AI Trainee Program - Milestone 6 (Milestone 5 + Streamlit UI)
