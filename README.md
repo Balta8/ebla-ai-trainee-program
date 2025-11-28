@@ -28,7 +28,7 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ### Milestone 1: Learning Python ✅
 **Status:** Completed  
-**Branch:** `main`  
+**Branch:** `milestone1`  
 **Folder:** [`milestones/milestone1/`](./milestones/milestone1/)
 
 **Goal:** Gain a solid understanding of Python basics and write clean, structured code.
@@ -44,7 +44,7 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ### Milestone 2: Understanding RAG & Core Technologies ✅
 **Status:** Completed  
-**Branch:** `main`  
+**Branch:** `milestone2`  
 **Folder:** [`milestones/milestone2/`](./milestones/milestone2/)
 
 **Goal:** Understand Retrieval-Augmented Generation (RAG) architecture and build a working RAG system with local LLM.
@@ -63,7 +63,7 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ### Milestone 3: Data Preparation & Indexing ✅
 **Status:** Completed  
-**Branch:** `main`  
+**Branch:** `milestone3`  
 **Folder:** [`milestones/milestone3/`](./milestones/milestone3/)
 
 **Goal:** Preprocess text data, create embeddings, and index documents via FastAPI endpoints.
@@ -83,7 +83,7 @@ This repository is dedicated to the implementation and deliverables of the **EBL
 
 ### Milestone 4: Retrieval & LLM Integration ✅
 **Status:** Completed  
-**Branch:** `main`  
+**Branch:** `milestone4`  
 **Folder:** [`milestones/milestone4/`](./milestones/milestone4/)
 
 **Goal:** Implement retrieval of relevant documents and integrate with local LLM.
@@ -249,10 +249,10 @@ python3 main.py
 
 | Milestone | Status | Branch | Folder |
 |-----------|--------|--------|--------|
-| 1. Python Fundamentals | ✅ Complete | `main` | `milestones/milestone1/` |
-| 2. RAG & Core Tech | ✅ Complete | `main` | `milestones/milestone2/` |
-| 3. Data & Indexing | ✅ Complete | `main` | `milestones/milestone3/` |
-| 4. Retrieval & LLM | ✅ Complete | `main` | `milestones/milestone4/` |
+| 1. Python Fundamentals | ✅ Complete | `milestone1` | `milestones/milestone1/` |
+| 2. RAG & Core Tech | ✅ Complete | `milestone2` | `milestones/milestone2/` |
+| 3. Data & Indexing | ✅ Complete | `milestone3` | `milestones/milestone3/` |
+| 4. Retrieval & LLM | ✅ Complete | `milestone4` | `milestones/milestone4/` |
 | 5. Chat & Prompts | ✅ Complete | `milestone5` | `milestones/milestone5/` |
 | 6. Streamlit UI | ✅ Complete | `milestone6` | `milestones/milestone6/` |
 
