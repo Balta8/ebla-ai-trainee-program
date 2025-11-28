@@ -22,4 +22,3 @@ class UserModel(Base):
 
     # Relationship with sessions
     sessions = relationship("SessionModel", back_populates="user")
-

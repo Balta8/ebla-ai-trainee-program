@@ -14,7 +14,7 @@ class MessageModel(Base):
         session_id (str): Identifier for the session associated with the message.
         role (str): Role of the message sender (e.g., 'user' or 'bot').
         content (str): Content of the message.
-        timestamp (datetime): Timestamp when the message was created.
+        created_date (datetime): Timestamp when the message was created.
     """
     __tablename__ = "messages"
 
@@ -22,7 +22,7 @@ class MessageModel(Base):
     session_id : str = Column(String(255), ForeignKey("sessions.session_id"), nullable=False)
     role : str = Column(String(50), nullable=False)
     content : str = Column(Text, nullable=False)
-    timestamp : datetime = Column(DateTime, default=datetime.utcnow)
+    created_date : datetime = Column(DateTime, default=datetime.utcnow)
 
     # Relationship with session
     session = relationship("SessionModel", back_populates="messages")

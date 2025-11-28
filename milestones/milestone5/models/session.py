@@ -20,7 +20,7 @@ class SessionModel(Base):
     user_id: str = Column(String(255), ForeignKey("users.user_id"), nullable=False)
     created_date: datetime = Column(DateTime, default=datetime.utcnow)
 
-    # Relationships
+    # Relationship 
     user = relationship("UserModel", back_populates="sessions")
 
     # cascade="all, delete-orphan":
