@@ -64,3 +64,4 @@ Thumbs.db
 *.log
 logs/
 chroma_db/
+.files
