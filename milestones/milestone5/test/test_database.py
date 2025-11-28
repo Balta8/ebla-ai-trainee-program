@@ -12,7 +12,7 @@ from models.session import SessionModel
 from models.message import MessageModel  
 from models.summary import SummaryModel
 
-from database.db_connection import DatabaseManager
+from repositories.database.db_connection import DatabaseManager
 from sqlalchemy import inspect
 
 # Initialize DatabaseManager and create tables
